@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple HTML Website</title>
+    <style>
+      /* Global Styles */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+      }
+
+      header {
+        background-color: #4caf50;
+        color: white;
+        padding: 20px;
+        text-align: center;
+        position: relative;
+      }
+
+      header img {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+
+      nav {
+        background-color: #333;
+        overflow: hidden;
+      }
+
+      nav ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+      }
+
+      nav ul li {
+        padding: 14px 20px;
+      }
+
+      nav ul li a {
+        color: white;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+      }
+
+      nav ul li a:hover {
+        background-color: #575757;
+      }
+
+      main {
+        padding: 20px;
+        max-width: 1200px;
+        margin: auto;
+        background-color: white;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+
+      section {
+        margin-bottom: 20px;
+      }
+
+      h2 {
+        color: #4caf50;
+      }
+
+      p {
+        line-height: 1.6;
+      }
+
+      footer {
+        background-color: #333;
+        color: white;
+        text-align: center;
+        padding: 10px;
+        position: fixed;
+        width: 100%;
+        bottom: 0;
+      }
+
+      /* Back to Top Button */
+      #backToTop {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: none;
+      }
+
+      #backToTop:hover {
+        background-color: #45a049;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Header Section -->
+    <header>
+      <!-- Logo Image -->
+      <img src="../pet.png" alt="Logo" />
+      <h1 id="greeting">Welcome to Pet Shop</h1>
+      <p>
+        This is a basic example of an HTML website enhanced with JavaScript.
+      </p>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main Content Section -->
+    <main>
+      <section id="home">
+        <h2>Home</h2>
+        <p>
+          Welcome to the homepage of this simple website. Here, you'll find
+          basic information about the site.
+        </p>
+      </section>
+
+      <section id="about">
+        <h2>About</h2>
+        <p>
+          This website is built using HTML, CSS, and JavaScript. It serves as an
+          example of a basic webpage structure with interactivity.
+        </p>
+      </section>
+
+      <section id="services">
+        <h2>Services</h2>
+        <p>
+          We offer a range of services to help you learn more about web
+          development. These include tutorials and examples.
+        </p>
+      </section>
+
+      <section id="contact">
+        <h2>Contact</h2>
+        <p>
+          Feel free to reach out via email or social media if you have any
+          questions or comments.
+        </p>
+      </section>
+    </main>
+
+    <!-- Footer Section -->
+    <footer>
+      <p>&copy; 2024 Simple Website. All rights reserved.</p>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop">Back to Top</button>
+
+    <script>
+      // JavaScript to add dynamic greeting
+      function updateGreeting() {
+        const greeting = document.getElementById("greeting");
+        const currentHour = new Date().getHours();
+
+        if (currentHour < 12) {
+          greeting.textContent = "Good Morning! Welcome to Pet Shop";
+        } else if (currentHour < 18) {
+          greeting.textContent = "Good Afternoon! Welcome to Pet Shop";
+        } else {
+          greeting.textContent = "Good Evening! Welcome to Pet Shop";
+        }
+      }
+
+      // JavaScript to show/hide "Back to Top" button
+      window.onscroll = function () {
+        const backToTopBtn = document.getElementById("backToTop");
+        if (
+          document.body.scrollTop > 20 ||
+          document.documentElement.scrollTop > 20
+        ) {
+          backToTopBtn.style.display = "block";
+        } else {
+          backToTopBtn.style.display = "none";
+        }
+      };
+
+      // Function to scroll to the top of the page
+      function scrollToTop() {
+        document.body.scrollTop = 0; // For Safari
+        document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE, and Opera
+      }
+
+      // Attach click event to "Back to Top" button
+      document
+        .getElementById("backToTop")
+        .addEventListener("click", scrollToTop);
+
+      // Call the updateGreeting function on page load
+      updateGreeting();
+    </script>
+  </body>
+</html>
