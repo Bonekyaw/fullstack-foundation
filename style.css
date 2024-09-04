@@ -1,0 +1,11 @@
+body {
+    text-align: center;
+}
+p {
+  color: orange;
+}
+#image {
+    width: 100px;
+    height: 100px;
+    cursor: pointer;
+}
