@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HTML CSS </title>
+    <title>Simple HTML Website</title>
     <style>
       /* Global Styles */
       body {
@@ -88,6 +88,24 @@
         width: 100%;
         bottom: 0;
       }
+
+      /* Back to Top Button */
+      #backToTop {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        display: none;
+      }
+
+      #backToTop:hover {
+        background-color: #45a049;
+      }
     </style>
   </head>
 
@@ -96,8 +114,10 @@
     <header>
       <!-- Logo Image -->
       <img src="../images/pet.png" alt="Logo" />
-      <h1>Welcome to Pet Shop</h1>
-      <p>This is a basic example of an HTML-only website.</p>
+      <h1 id="greeting">Welcome to Pet Shop</h1>
+      <p>
+        This is a basic example of an HTML website enhanced with JavaScript.
+      </p>
     </header>
 
     <!-- Navigation Bar -->
@@ -123,8 +143,8 @@
       <section id="about">
         <h2>About</h2>
         <p>
-          This website is built using only HTML and CSS. It serves as an example
-          of a basic webpage structure with simple styling.
+          This website is built using HTML, CSS, and JavaScript. It serves as an
+          example of a basic webpage structure with interactivity.
         </p>
       </section>
 
@@ -149,5 +169,47 @@
     <footer>
       <p>&copy; 2024 Simple Website. All rights reserved.</p>
     </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop">Back to Top</button>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+      // jQuery to add dynamic greeting
+      function updateGreeting() {
+        const currentHour = new Date().getHours();
+
+        if (currentHour < 12) {
+          $("#greeting").text("Good Morning! Welcome to Pet Shop");
+        } else if (currentHour < 18) {
+          $("#greeting").text("Good Afternoon! Welcome to Pet Shop");
+        } else {
+          $("#greeting").text("Good Evening! Welcome to Pet Shop");
+        }
+      }
+
+      // jQuery to show/hide "Back to Top" button
+      $(window).scroll(function () {
+        if ($(this).scrollTop() > 10) {
+          $("#backToTop").fadeIn();
+        } else {
+          $("#backToTop").fadeOut();
+        }
+      });
+
+      // Function to scroll to the top of the page
+      function scrollToTop() {
+        $("html, body").animate({ scrollTop: 0 }, "fast");
+      }
+
+      // Attach click event to "Back to Top" button
+      $("#backToTop").on("click", scrollToTop);
+
+      // Call the updateGreeting function on page load
+      $(document).ready(function () {
+        updateGreeting();
+      });
+    </script>
   </body>
 </html>
