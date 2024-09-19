@@ -181,14 +181,6 @@
         <a href="https://google.com" target="_blank" title="google.com" style="display: block;" rel="noopener">Go to google</a>
         <a href="html-only.html" target="_self">Go to HTML Only</a>
         <button onclick="alert('You clicked it!')">Click</button>
-        <!-- form -->
-         <form action="action.php">
-          <label for="username">User Name</label>
-          <input type="text" id="username" name="username" value="your name">
-          <input type="submit" value="Submit">
-          <!-- <button type="submit">Submit</button>
-          <button type="button">Validate</button> -->
-        </form>
       </section>
 <!-- block vs inline -->
       <section id="services">
@@ -197,6 +189,43 @@
           &#128512; We offer a range of services to help you learn more about web
           development. These include tutorials and examples.
         </p>
+                <!-- form -->
+                <form action="action.php" method="post">
+                  <label for="username">User Name</label><br>
+                  <input type="text" id="username" name="username" value="" placeholder="Mr. Phone" autofocus required pattern="[0-9A-Za-z]"><br>
+                  <label for="password">Password [ 0 - 9 ]</label><br>
+                  <input type="password" id="password" name="password" value="" maxlength="8" pattern="[0-9]{8}" required><br>
+                  <label for="role">Role</label><br>
+                  <input type="text" id="role" name="role" value="Admin" disabled><br><br>
+                  <!-- radio -->
+                  <input type="radio" id="html" name="language" value="HTML">
+                  <label for="html">HTML</label><br>
+                  <input type="radio" id="css" name="language" value="CSS">
+                  <label for="css">CSS</label><br>
+                  <input type="radio" id="js" name="language" value="JS">
+                  <label for="js">JS</label><br><br>
+                  <!-- checkbox -->
+                  <input type="checkbox" id="course1" name="course1" value="Programming">
+                  <label for="course1">Prgramming Course</label><br>
+                  <input type="checkbox" id="course2" name="course2" value="design">
+                  <label for="course2">UI/UX Course</label><br>
+                  <input type="checkbox" id="course3" name="course3" value="management">
+                  <label for="course3">Project Management Course</label><br><br>
+                  <label for="quantity">Quantity</label>
+                  <input type="number" id="quantity" name="quantity" value="" min="1" max="100"><br><br>
+                  <label for="color">Choose color</label>
+                  <input type="color" id="color" name="color" value="#128512"><br><br>
+                  <label for="date">Birthday</label>
+                  <input type="date" id="date" name="date" value="" min="1990-01-01" max="2094-01-01">
+                  <input type="hidden" name="csrf_token" value="687898"><br><br>
+                  <label for="file">Choose your pictures</label>
+                  <input type="file" id="file" name="file" multiple >
+                   <br><br>
+                   <input type="submit" value="Submit">
+                   <input type="reset" value="Reset"><br>
+
+ 
+                </form>
       </section>
 
       <section id="contact">
