@@ -179,8 +179,12 @@
         </ul>
         <!-- Link - HyperLinks -->
         <a href="https://google.com" target="_blank" title="google.com" style="display: block;" rel="noopener">Go to google</a>
-        <a href="html-only.html" target="_self">Go to HTML Only</a>
-        <button onclick="alert('You clicked it!')">Click</button>
+        <a href="html-only.html" target="_self">Go to HTML Only</a><br>
+        <button onclick="alert('You clicked it!')">Click</button><br>
+        <!-- media -->
+        <video width="400" height="300" controls autoplay muted>
+          <source src="../images/Unity.mp4" type="video/mp4">
+        </video>
       </section>
 <!-- block vs inline -->
       <section id="services">
@@ -191,19 +195,23 @@
         </p>
                 <!-- form -->
                 <form action="action.php" method="post">
-                  <label for="username">User Name</label><br>
-                  <input type="text" id="username" name="username" value="" placeholder="Mr. Phone" autofocus required pattern="[0-9A-Za-z]"><br>
-                  <label for="password">Password [ 0 - 9 ]</label><br>
-                  <input type="password" id="password" name="password" value="" maxlength="8" pattern="[0-9]{8}" required><br>
-                  <label for="role">Role</label><br>
-                  <input type="text" id="role" name="role" value="Admin" disabled><br><br>
+                  <fieldset>
+                    <legend>Personal Info</legend>
+                    <label for="username">User Name</label><br>
+                    <input type="text" id="username" name="username" value="" placeholder="Mr. Phone" autofocus required pattern="[0-9A-Za-z]"><br>
+                    <label for="password">Password [ 0 - 9 ]</label><br>
+                    <input type="password" id="password" name="password" value="" maxlength="8" pattern="[0-9]{8}" required><br>
+                    <label for="role">Role</label><br>
+                    <input type="text" id="role" name="role" value="Admin" disabled><br><br>
+                  </fieldset>
                   <!-- radio -->
-                  <input type="radio" id="html" name="language" value="HTML">
-                  <label for="html">HTML</label><br>
-                  <input type="radio" id="css" name="language" value="CSS">
-                  <label for="css">CSS</label><br>
-                  <input type="radio" id="js" name="language" value="JS">
-                  <label for="js">JS</label><br><br>
+                   <br>
+                    <input type="radio" id="html" name="language" value="HTML">
+                    <label for="html">HTML</label><br>
+                    <input type="radio" id="css" name="language" value="CSS">
+                    <label for="css">CSS</label><br>
+                    <input type="radio" id="js" name="language" value="JS">
+                    <label for="js">JS</label><br><br>
                   <!-- checkbox -->
                   <input type="checkbox" id="course1" name="course1" value="Programming">
                   <label for="course1">Prgramming Course</label><br>
@@ -222,9 +230,27 @@
                   <input type="file" id="file" name="file" multiple >
                    <br><br>
                    <input type="submit" value="Submit">
-                   <input type="reset" value="Reset"><br>
-
- 
+                   <input type="reset" value="Reset"><br><br>
+                   <label for="description">Description</label><br>
+                  <textarea id="description" name="description" rows="5" cols="50"></textarea><br><br>
+                  <label for="color">Choose color</label><br>
+                  <select id="color" name="color" size="3" multiple>
+                    <option value="1">Blue</option>
+                    <option value="2">Red</option>
+                    <option value="3" selected>White</option>
+                    <option value="4">Black</option>
+                    <option value="5">Green</option>
+                  </select>
+                  <br><br>
+                  <label for="pet">Choose pet</label>
+                  <input id="pet" name="pets" list="petname">
+                  <datalist id="petname">
+                    <option value="Cat">
+                    <option value="Tiger">
+                    <option value="Dog">
+                    <option value="Lion">
+                    <option value="Fish">
+                  </datalist>
                 </form>
       </section>
 
