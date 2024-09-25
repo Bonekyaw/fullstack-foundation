@@ -44,9 +44,24 @@
         justify-content: center;
       }
 
+      /* Units - px, em, rem, vw, vh, % */
+      section#home h2 {
+        font-size: 2em;
+      }
+
       nav ul li {
         padding: 14px 20px;
       }
+      /* color name */
+      /* color: white; */
+      /* RGB - Red Green Blue - (0 - 255) value */
+      /* color: rgb(24, 24, 196); */
+      /* RGBA - Alpha (0-1) */
+      /* color: rgba(24, 24, 196, 0.8 ); */
+      /* HEX value - RRGGBB, RGB, RRGGBBAA - 0-9a-f */
+      /* background-color: #575757; */
+      /* background-color: #fff; */
+      /* background-color: #958a8a55; */
 
       nav ul li a {
         color: white;
@@ -56,7 +71,7 @@
       }
 
       nav ul li a:hover {
-        background-color: #575757;
+        background-color: #958a8a55;
       }
 
       main {
@@ -70,13 +85,74 @@
       section {
         margin-bottom: 20px;
       }
-
+      /* universal selector */
+      * {
+        text-align: center;
+      }
+      /* element selector */
       h2 {
         color: #4caf50;
       }
+      /* grouping selector */
+      h2,
+      p {
+        text-align: center;
+      }
+      /* id selector */
+      #about-title {
+        font-size: 35px;
+      }
+      /* class selector */
+      .abcontent {
+        color: orange;
+      }
+      .absize {
+        font-size: 20px;
+      }
+      /* descendant selector */
+      div p {
+        color: rgba(24, 24, 196, 0.8);
+      }
+      /* child selector */
+      article > p {
+        color: red;
+      }
+      /* adjacent sibling selector */
+      h2 + p {
+        background-color: yellow;
+      }
+      /* general sibling selector */
+      div ~ p {
+        background-color: yellowgreen;
+      }
+      /* pseudo-class */
+      h2.abcontent:hover {
+        color: rgb(191, 19, 162);
+      }
+      /* pseudo-element */
+      p::selection {
+        color: rgb(191, 19, 162);
+        background-color: yellow;
+      }
 
       p {
-        line-height: 1.6;
+        line-height: 1.6em;
+      }
+
+      #head3id {
+        color: green;
+      }
+
+      .head3 {
+        color: blue;
+      }
+
+      h3 {
+        color: red;
+      }
+
+      #contact {
+        margin-bottom: 150px;
       }
 
       footer {
@@ -136,13 +212,16 @@
         <h2>Home</h2>
         <p>
           Welcome to the homepage of this simple website. Here, you'll find
-          basic information about the site.
+          basic information about the site. This website is built using HTML,
+          CSS, and JavaScript. It serves as an example of a basic webpage
+          structure with interactivity.
         </p>
+        <p>next paragraph</p>
       </section>
 
       <section id="about">
-        <h2>About</h2>
-        <p>
+        <h2 id="about-title" class="abcontent">About</h2>
+        <p class="abcontent absize">
           This website is built using HTML, CSS, and JavaScript. It serves as an
           example of a basic webpage structure with interactivity.
         </p>
@@ -150,10 +229,23 @@
 
       <section id="services">
         <h2>Services</h2>
-        <p>
-          We offer a range of services to help you learn more about web
-          development. These include tutorials and examples.
-        </p>
+        <div>
+          <h3 class="head3" id="head3id">Sales</h3>
+          <p>
+            We offer a range of services to help you learn more about web
+            development. These include tutorials and examples.
+          </p>
+          <p>
+            We offer a range of services to help you learn more about web
+            development. These include tutorials and examples.
+          </p>
+          <article>
+            <p>
+              Welcome to the homepage of this simple website. Here, you'll find
+              basic information about the site.
+            </p>
+          </article>
+        </div>
       </section>
 
       <section id="contact">
@@ -162,6 +254,13 @@
           Feel free to reach out via email or social media if you have any
           questions or comments.
         </p>
+        <article>
+          <div>
+            <p>Tiktok</p>
+          </div>
+          <p>Facebook</p>
+          <p>Gmail</p>
+        </article>
       </section>
     </main>
 
