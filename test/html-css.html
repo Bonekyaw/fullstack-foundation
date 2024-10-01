@@ -3,17 +3,30 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HTML CSS </title>
+    <title>HTML CSS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playwrite+DE+Grund:wght@100..400&display=swap"
+      rel="stylesheet"
+    />
     <style>
       /* Global Styles */
+      /* font-family: Arial, Helvetica, sans-serif; */
+      /* font-family: "Times New Roman", Georgia, serif; */
+      /* font-family: "Courier New", monospace; */
+      * {
+        box-sizing: border-box;
+      }
+
       body {
-        font-family: Arial, sans-serif;
+        font-family: Arial, Helvetica, sans-serif;
         margin: 0;
         padding: 0;
         background-color: #f4f4f4;
         color: #333;
       }
-
+      /* static, relative , fixed, sticky, absolute*/
       header {
         background-color: #4caf50;
         color: white;
@@ -34,17 +47,21 @@
       nav {
         background-color: #333;
         overflow: hidden;
+        position: sticky;
+        top: 0;
       }
 
       nav ul {
         list-style-type: none;
         margin: 0;
         padding: 0;
+        /* border: 2px solid red; */
         display: flex;
-        justify-content: center;
+        justify-content: center ;
       }
 
       nav ul li {
+        /* border: 1px solid green; */
         padding: 14px 20px;
       }
 
@@ -73,10 +90,54 @@
 
       h2 {
         color: #4caf50;
+        /* border: 2px solid gray; */
+        /* border-radius: 5px; */
+        /* text-transform: uppercase; */
+        /* text-shadow: 2px 2px 2px rgb(230, 225, 225), 0px 0px 25px rgb(76, 212, 167); */
+      }
+
+      h2 {
+        font-family: Georgia, serif;
+        font-style: italic;
+        font-weight: bold;
+        /* font-variant: small-caps; */
       }
 
       p {
-        line-height: 1.6;
+        font-family: "Playwrite DE Grund", cursive;
+        font-optical-sizing: auto;
+        font-weight: bold;
+        font-style: normal;
+        line-height: 1.6rem;
+        text-align: justify;
+        text-indent: 5em;
+        /* letter-spacing: 1px; */
+        /* word-spacing: 3px; */
+      }
+
+      p a {
+        color: green;
+        /* text-decoration: none; */
+        /* text-decoration-line: underline; */
+        /* text-decoration-color: rgb(92, 191, 234);
+        text-decoration-style: dashed;
+        text-decoration-thickness: 3px; */
+        text-decoration: underline rgb(92, 191, 234) dashed 3px;
+      }
+
+      #about div {
+        width: 200px;
+        height: 80px;
+        border: 2px solid green;
+        overflow: auto;
+      }
+
+      #about ul {
+        list-style-type: square;
+        /* margin: 0;
+        padding: 0; */
+        /* list-style-position: inside; */
+        /* list-style-image: url("../images/pet.png"); */
       }
 
       footer {
@@ -95,9 +156,8 @@
     <!-- Header Section -->
     <header>
       <!-- Logo Image -->
-      <img src="../images/pet.png" alt="Logo" />
+      <img src="../images/shop.png" alt="Logo" />
       <h1>Welcome to Pet Shop</h1>
-      <p>This is a basic example of an HTML-only website.</p>
     </header>
 
     <!-- Navigation Bar -->
@@ -115,8 +175,10 @@
       <section id="home">
         <h2>Home</h2>
         <p>
-          Welcome to the homepage of this simple website. Here, you'll find
-          basic information about the site.
+          Welcome to the homepage of this simple website. If you want to talk to
+          us, go to <a href="#contact">contact</a>, you'll find basic
+          information about the site. Feel free to reach out via email or social
+          media if you have any questions or comments.
         </p>
       </section>
 
@@ -126,6 +188,19 @@
           This website is built using only HTML and CSS. It serves as an example
           of a basic webpage structure with simple styling.
         </p>
+        <div>
+          you'll find basic information about the site. Feel free to reach out
+          via email or social media if you have any questions or comments.
+        </div>
+        <ul>
+          <li>you'll find basic information about the site.</li>
+          <li>
+            Feel free to reach out via email or social media if you have any
+            questions or comments.
+          </li>
+          <li>We offer a range of services</li>
+          <li>Feel free to reach out via email</li>
+        </ul>
       </section>
 
       <section id="services">
