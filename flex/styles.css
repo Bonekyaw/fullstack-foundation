@@ -39,15 +39,38 @@ nav ul li a {
 
 main {
   display: flex;
-  /* flex-wrap: wrap; */
+  flex-wrap: wrap;
   padding: 20px;
   background-color: #f4f4f4;
 }
-
+/* flex-grow , flex-shrink flex-basis */
 .content {
   flex: 2;
   padding: 20px;
 }
+
+.post {
+  /* background-color: rgb(157, 128, 128); */
+  /* height: 450px; */
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  /* justify-content: center;
+  align-items: center; */
+  /* align-content: center; */
+}
+
+article {
+  width: 250px;
+  /* height: 150px; */
+  padding: 10px;
+  background-color: #ddd;
+  flex-grow: 1;
+}
+
+/* #ar1 {
+  align-self: flex-start;
+} */
 
 .sidebar {
   flex: 1;
@@ -65,10 +88,11 @@ footer {
 }
 
 /* Responsive design for smaller screens */
+/* max-width: 768px;  - ( 0 - 768 ) */
+/* min-width: 768px;  - ( 768 - * ) */
 @media (max-width: 768px) {
   nav ul {
     flex-direction: column;
-    align-items: center;
   }
 
   main {
