@@ -52,6 +52,30 @@ main {
   padding: 20px;
 }
 
+.post {
+  display: grid;
+  /* grid-template-columns: auto auto auto; */
+  grid-template-areas: "Article Article . " "Article4 Article4 .";
+  gap: 10px;
+}
+
+article {
+  background-color: #ddd;
+  padding: 10px;
+}
+/* row-col start, row-col end */
+.ar1 {
+  grid-area: Article;
+  /* grid-area: 1 / 1 / span 2 / span 2; */
+  /* grid-area: 1 / 1 / 3 / 3; */
+  /* grid-column: 1 / 3;
+  grid-row: 1 / span 2; */
+}
+
+.ar4 {
+  grid-area: Article4;
+}
+
 .sidebar {
   background-color: #ddd;
   padding: 20px;
@@ -65,7 +89,16 @@ footer {
   margin-top: 20px;
 }
 
+/* ( 768 - 992) */
+@media (max-width: 992px) {
+  .post {
+    /* grid-template-columns: auto auto; */
+    grid-template-areas: "Article Article" "Article4 Article4";
+  }
+}
+
 /* Responsive design for smaller screens */
+/* ( 0 - 768 ) */
 @media (max-width: 768px) {
   main {
     grid-template-columns: 1fr; /* Stack content and sidebar in one column */
@@ -74,6 +107,19 @@ footer {
   nav ul {
     flex-direction: column;
     align-items: center;
+  }
+
+  .post {
+    /* grid-template-columns: auto; */
+    grid-template-areas: "Article" "Article4";
+  }
+
+  .ar1 {
+    grid-column-end: 2;
+  }
+
+  .ar4 {
+    grid-column-end: 2;
   }
 
   .sidebar {
