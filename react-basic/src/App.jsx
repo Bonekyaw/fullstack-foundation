@@ -1,24 +1,20 @@
-import Greeting from "./components/Greeting";
-import TabButton from "./components/TabButton";
+import { useState } from "react";
+
 import "./App.css";
 
 function App() {
-  const user = { name: "David", age: 38 };
-  const brands = ["Apple", "Samsung", "Huawei", "Sony", "Nokia"];
-  const onClickHandler = (name) => {
-    alert(`Hello ${name}`);
-  };
+  const [user, setUser] = useState({ name: "Mr Phone", age: 38, isBusy: true });
 
   return (
     <>
-      <Greeting {...user} />
-      <p>This is a paragraph from App.js</p>
-      <TabButton onClick={() => onClickHandler("Mr. Phone Nyo")}>
-        <p>Sign Up</p>
-      </TabButton>
-      {brands.map((brand) => (
-        <p key={brand}>{brand}</p>
-      ))}
+      <p>Name : {user.name}</p>
+      <p>Age : {user.age}</p>
+      {user.isBusy ? <p>He is now busy.</p> : <p>He is now available.</p>}
+      <button
+        onClick={() => setUser((prev) => ({ ...prev, isBusy: !user.isBusy }))}
+      >
+        Change status
+      </button>
     </>
   );
 }
