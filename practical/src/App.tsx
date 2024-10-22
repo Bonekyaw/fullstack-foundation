@@ -1,22 +1,26 @@
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
+import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import Home from "@/pages/Home";
+import Shop from "@/pages/Shop";
+import Cart from "@/pages/Cart";
+import NotFound from "@/pages/404";
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <div className="p-4 pt-2">
-        <h1>Vite + React</h1>
+    <Router>
+      <div className="flex min-h-screen flex-col">
+        <Header />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/shop" element={<Shop />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+        <Footer />
       </div>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-      <Button
-        onClick={() => setCount((count) => count + 1)}
-        variant="destructive"
-      >
-        count is {count}
-      </Button>
-    </>
+    </Router>
   );
 }
 
