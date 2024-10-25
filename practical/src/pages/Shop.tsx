@@ -13,7 +13,7 @@ function Shop() {
   return (
     <section className="flex grow bg-gray-100">
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+        <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
           {products.map((product) => (
             <ProductCard {...product} />
           ))}
