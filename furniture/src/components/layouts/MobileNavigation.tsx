@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-
+import { useState, useEffect } from "react";
 import type { MainNavItem } from "@/types";
 import { Icons } from "@/components/icons";
 import { siteConfig } from "@/config/site";
@@ -8,10 +8,10 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
-  SheetFooter,
-  SheetHeader,
-  SheetTitle,
+  // SheetDescription,
+  // SheetFooter,
+  // SheetHeader,
+  // SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -27,6 +27,22 @@ interface MainNavigationProps {
 }
 
 export default function MobileNavigation({ items }: MainNavigationProps) {
+  const [isDesktop, setIsDesktop] = useState(false);
+  const query = "(min-width: 1024px)";
+
+  useEffect(() => {
+    function onChange(event: MediaQueryListEvent) {
+      setIsDesktop(event.matches);
+    }
+    const result = matchMedia(query);
+    result.addEventListener("change", onChange);
+    return () => result.removeEventListener("change", onChange);
+  }, [query]);
+
+  if (isDesktop) {
+    return null;
+  }
+
   return (
     <div className="lg:hidden">
       <Sheet>
@@ -39,7 +55,7 @@ export default function MobileNavigation({ items }: MainNavigationProps) {
         <SheetContent side="left" className="pt-9">
           <SheetClose asChild>
             <Link to="/" className="flex items-center">
-              <Icons.logo className="size-4 mr-2" />
+              <Icons.logo className="mr-2 size-4" />
               <span className="font-bold">{siteConfig.name}</span>
               <span className="sr-only">Home</span>
             </Link>
@@ -64,7 +80,7 @@ export default function MobileNavigation({ items }: MainNavigationProps) {
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
-            <div className="flex flex-col space-y-2 mt-4">
+            <div className="mt-4 flex flex-col space-y-2">
               {items?.[0].menu?.map((item) => (
                 <SheetClose asChild key={item.title}>
                   <Link to={String(item.href)} className="">

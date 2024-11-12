@@ -5,11 +5,11 @@ import { ModeToggle } from "@/components/mode-toggle";
 
 function Header() {
   return (
-    <header className="w-full border-b">
-      <nav className="container flex items-center h-16 mx-auto">
+    <header className="fixed top-0 z-50 w-full border-b bg-background">
+      <nav className="container mx-auto flex h-16 items-center">
         <MainNavigation items={siteConfig.mainNav} />
         <MobileNavigation items={siteConfig.mainNav} />
-        <div className="flex flex-1 items-center justify-end space-x-4 mr-8 lg:mr-0">
+        <div className="mr-8 flex flex-1 items-center justify-end space-x-4 lg:mr-0">
           <ModeToggle />
         </div>
       </nav>
