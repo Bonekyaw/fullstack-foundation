@@ -34,15 +34,15 @@ export default function CarouselCard({ products }: ProductProps) {
                 className="size-28 rounded-md"
               />
               <div>
-                <h3 className="text-sm font-bold">{product.name}</h3>
-                <p className="my-2 text-sm text-gray-600">
-                  {product.description.length > 55
-                    ? product.description.substring(0, 55) + " ..."
-                    : product.description}
+                <h3 className="line-clamp-1 text-sm font-bold">
+                  {product.name}
+                </h3>
+                <p className="my-2 line-clamp-2 text-sm text-gray-600">
+                  {product.description}
                 </p>
                 <Link
                   to={`/products/${product.id}`}
-                  className="text-own text-sm font-semibold hover:underline"
+                  className="text-sm font-semibold text-own hover:underline"
                 >
                   Read More
                 </Link>

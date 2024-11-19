@@ -21,9 +21,9 @@ interface MainNavigationProps {
 export default function MainNavigation({ items }: MainNavigationProps) {
   return (
     <div className="hidden gap-6 lg:flex">
-      <Link to="/" className="items-center space-x-2 flex">
+      <Link to="/" className="flex items-center space-x-2">
         <Icons.logo className="size-7" aria-hidden="true" />
-        <span className="font-bold inline-block">{siteConfig.name}</span>
+        <span className="inline-block font-bold">{siteConfig.name}</span>
         <span className="sr-only">Home</span>
       </Link>
       <NavigationMenu>
@@ -64,7 +64,7 @@ export default function MainNavigation({ items }: MainNavigationProps) {
           )}
           {items?.[0]?.menu &&
             items[0].menu.map((item) => (
-              <NavigationMenuItem>
+              <NavigationMenuItem key={item.title}>
                 <Link to={String(item.href)}>
                   <NavigationMenuLink className={navigationMenuTriggerStyle()}>
                     {item.title}
@@ -90,7 +90,7 @@ const ListItem = React.forwardRef<
           to={String(href)}
           className={cn(
             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
-            className
+            className,
           )}
           {...props}
         >
