@@ -7,6 +7,9 @@ import ErrorPage from "@/pages/Error";
 import BlogRootLayout from "@/pages/blogs/BlogRootLayout";
 import BlogPage from "@/pages/blogs/Blog";
 import BlogDetailPage from "@/pages/blogs/BlogDetail";
+import ProductRootLayout from "@/pages/products/ProductRootLayout";
+import ProductPage from "@/pages/products/Product";
+import ProductDetailPage from "@/pages/products/ProductDetail";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +25,14 @@ export const router = createBrowserRouter([
         children: [
           { index: true, element: <BlogPage /> },
           { path: ":postId", element: <BlogDetailPage /> },
+        ],
+      },
+      {
+        path: "products",
+        element: <ProductRootLayout />,
+        children: [
+          { index: true, element: <ProductPage /> },
+          { path: ":productId", element: <ProductDetailPage /> },
         ],
       },
     ],

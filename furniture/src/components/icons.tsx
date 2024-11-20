@@ -5,6 +5,7 @@ import {
   ExclamationTriangleIcon,
   ArrowLeftIcon,
   LayersIcon,
+  PlusIcon,
 } from "@radix-ui/react-icons";
 
 export type IconProps = React.HTMLAttributes<SVGElement>;
@@ -32,4 +33,5 @@ export const Icons = {
   exclamation: ExclamationTriangleIcon,
   arrowLeft: ArrowLeftIcon,
   layers: LayersIcon,
+  plus: PlusIcon,
 };
