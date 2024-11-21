@@ -13,6 +13,7 @@ import {
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 
 import type { Product } from "@/types";
+import { formatPrice } from "@/lib/utils";
 
 interface ProductProps {
   product: Product;
@@ -35,10 +36,10 @@ function ProductCard({ product }: ProductProps) {
         <CardContent className="space-y-1.5 p-4">
           <CardTitle className="line-clamp-1">{product.name}</CardTitle>
           <CardDescription className="line-clamp-1">
-            ${product.price}
+            {formatPrice(product.price)}
             {product.discount > 0 && (
               <span className="ml-2 font-extralight line-through">
-                ${product.discount}
+                {formatPrice(product.discount)}
               </span>
             )}
           </CardDescription>

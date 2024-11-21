@@ -7,6 +7,21 @@ import p6 from "@/data/images/p-6.webp";
 import p7 from "@/data/images/p-7.webp";
 import p8 from "@/data/images/p-8.webp";
 
+export const filterList = {
+  types: [
+    { id: "uuid1", label: "seating" },
+    { id: "uuid2", label: "lying" },
+    { id: "uuid3", label: "entertainment" },
+    { id: "uuid4", label: "tables" },
+    { id: "uuid5", label: "storage" },
+  ],
+  categories: [
+    { id: "uuid1", label: "Wooden" },
+    { id: "uuid2", label: "Bamboo" },
+    { id: "uuid3", label: "Metal" },
+  ],
+};
+
 export const products = [
   {
     id: "uuid1",
@@ -109,6 +124,19 @@ export const products = [
     price: 140,
     discount: 150,
     rating: 3,
+    inventory: 200,
+    status: "active",
+  },
+  {
+    id: "uuid9",
+    name: "Kruzo Aero Chair",
+    description:
+      "Donec facilisis quam ut purus rutrum lobortis. Donec vitae odio quam ut purus rutrum lobortis",
+    images: [p5, p3, p8],
+    categoryId: "uuid1",
+    price: 250,
+    discount: 260,
+    rating: 4,
     inventory: 200,
     status: "active",
   },
