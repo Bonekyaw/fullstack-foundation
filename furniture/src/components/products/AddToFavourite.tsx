@@ -8,8 +8,8 @@ interface FavouriteProp extends ButtonProps {
 }
 
 function AddToFavourite({
-  productId,
-  rating,
+  // productId,
+  // rating,
   className,
   ...props
 }: FavouriteProp) {
