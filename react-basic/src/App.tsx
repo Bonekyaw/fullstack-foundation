@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import "./App.css";
 
 import Counter from "./components/Counter";
@@ -8,7 +8,8 @@ import InitialSetup from "./components/InitialSetup";
 const App = () => {
   console.log("App rendered");
 
-  const [initialValue, setInitialValue] = useState<number>(0);
+  const [isSmartMode, setIsSmartMode] = useState(false); // true
+  const [initialValue, setInitialValue] = useState(0);
 
   const onSetupHandler = (inputValue: number) => {
     console.log("onSetupHandler in App - function called");
@@ -16,12 +17,18 @@ const App = () => {
     setInitialValue(inputValue);
   };
 
+  const modeHandler = useCallback(() => {
+    console.log("modeHandler in App - function called");
+    setIsSmartMode((prev) => !prev);
+    // setIsSmartMode(!isSmartMode);
+  }, []);
+
   return (
-    <>
-      <Title />
+    <div className={isSmartMode ? "bg-smart" : ""}>
+      <Title onChangeMode={modeHandler} />
       <InitialSetup onSetup={onSetupHandler} />
       <Counter initialValue={initialValue} />
-    </>
+    </div>
   );
 };
 

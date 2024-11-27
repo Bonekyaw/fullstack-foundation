@@ -18,6 +18,7 @@ function expensiveCompute(initialValue) {
 
 // Counter Component
 const Counter = ({ initialValue }: CounterProps) => {
+  // 7
   console.log("Counter rendered");
 
   const expensiveComputedValue = useMemo(
@@ -30,14 +31,14 @@ const Counter = ({ initialValue }: CounterProps) => {
   // Update count when initialValue changes
   useEffect(() => {
     setCount(expensiveComputedValue);
-  }, [initialValue]);
+  }, [expensiveComputedValue]);
 
   return (
     <>
       <h2>Counter</h2>
-      <p>Validated Initial Value: {initialValue}</p>
+      <p>Validated Initial Value: {expensiveComputedValue}</p>
       <p>Current Count: {count}</p>
-      <button onClick={() => setCount((prev) => prev + 1)}>Increment</button>
+      <button onClick={() => setCount((count) => count + 1)}>Increment</button>
     </>
   );
 };
