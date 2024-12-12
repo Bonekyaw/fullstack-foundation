@@ -1,0 +1,8 @@
+1. npm init -y
+2. npm i typescript ts-node @types/node nodemon --save-dev
+3. npx tsc --init
+4. npm i jest ts-jest supertest @types/jest @types/supertest jest-environment-node --save-dev
+5. npm i express@next dotenv cors helmet morgan jest-config
+6. npm i @types/express @types/cors @types/morgan --save-dev
+7. npm i bcrypt compression express-rate-limit express-validator jsonwebtoken multer
+8. npm i @types/bcrypt @types/compression @types/jsonwebtoken @types/multer --save-dev
