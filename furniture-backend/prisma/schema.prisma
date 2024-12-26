@@ -1,0 +1,148 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+  AUTHOR
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+  FREEZE
+}
+
+model Category {
+  id       Int       @id @default(autoincrement())
+  name     String    @db.VarChar(52)
+  posts    Post[]
+  products Product[]
+}
+
+model Type {
+  id       Int       @id @default(autoincrement())
+  name     String    @db.VarChar(52)
+  posts    Post[]
+  products Product[]
+}
+
+model Post {
+  id         Int      @id @default(autoincrement())
+  title      String   @db.VarChar(255)
+  content    String
+  body       String
+  image      String
+  authorId   Int
+  author     User     @relation(fields: [authorId], references: [id])
+  categoryId Int
+  category   Category @relation(fields: [categoryId], references: [id])
+  typeId     Int
+  type       Type     @relation(fields: [typeId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Product {
+  id          Int                @id @default(autoincrement())
+  name        String             @db.VarChar(255)
+  description String
+  price       Decimal            @db.Decimal(10, 2)
+  discount    Decimal            @default(0) @db.Decimal(10, 2)
+  rating      Int                @default(0) @db.SmallInt
+  inventory   Int                @default(0)
+  status      Status             @default(ACTIVE)
+  categoryId  Int
+  category    Category           @relation(fields: [categoryId], references: [id])
+  typeId      Int
+  type        Type               @relation(fields: [typeId], references: [id])
+  images      image[]
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+  orders      ProductsOnOrders[]
+}
+
+model image {
+  id        Int     @id @default(autoincrement())
+  path      String  @db.VarChar(255)
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+}
+
+model User {
+  id              Int       @id @default(autoincrement())
+  firstName       String?   @db.VarChar(52)
+  lastName        String?   @db.VarChar(52)
+  phone           String    @db.VarChar(15)
+  password        String
+  email           String?   @unique @db.VarChar(52)
+  role            Role      @default(USER)
+  status          Status    @default(ACTIVE)
+  lastLogin       DateTime?
+  errorLoginCount Int       @default(0) @db.SmallInt
+  randToken       String
+  image           String?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  posts           Post[]
+  orders          Order[]
+}
+
+model Tag {
+  id       Int        @id @default(autoincrement())
+  name     String     @db.VarChar(52)
+  taggable Taggable[]
+}
+
+model Taggable {
+  id     Int    @id @default(autoincrement())
+  tagId  Int
+  tag    Tag    @relation(fields: [tagId], references: [id])
+  type   String @db.VarChar(7)
+  typeId Int
+}
+
+model Order {
+  id         Int                @id @default(autoincrement())
+  userId     Int
+  user       User               @relation(fields: [userId], references: [id])
+  code       String             @db.VarChar(15)
+  totalPrice Decimal            @db.Decimal(10, 2)
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime           @updatedAt
+  products   ProductsOnOrders[]
+}
+
+model ProductsOnOrders {
+  id        Int     @id @default(autoincrement())
+  orderId   Int
+  order     Order   @relation(fields: [orderId], references: [id])
+  productId Int
+  product   Product @relation(fields: [productId], references: [id])
+  quantity  Int     @db.SmallInt
+  price     Decimal @db.Decimal(10, 2)
+}
+
+model Otp {
+  id            Int      @id @default(autoincrement())
+  phone         String   @db.VarChar(15)
+  otp           String   @db.VarChar(6)
+  rememberToken String
+  verifyToken   String?
+  count         Int      @default(0) @db.SmallInt
+  error         Int      @default(0) @db.SmallInt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
