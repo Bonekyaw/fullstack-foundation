@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,18 +7,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  USER
-  ADMIN
-  AUTHOR
-}
-
-enum Status {
-  ACTIVE
-  INACTIVE
-  FREEZE
-}
-
 model Category {
   id       Int       @id @default(autoincrement())
   name     String    @db.VarChar(52)
@@ -32,11 +14,27 @@ model Category {
   products Product[]
 }
 
-model Type {
-  id       Int       @id @default(autoincrement())
-  name     String    @db.VarChar(52)
-  posts    Post[]
-  products Product[]
+model Order {
+  id         Int                @id @default(autoincrement())
+  userId     Int
+  code       String             @db.VarChar(15)
+  totalPrice Decimal            @db.Decimal(10, 2)
+  createdAt  DateTime           @default(now())
+  updatedAt  DateTime
+  User       User               @relation(fields: [userId], references: [id])
+  products   ProductsOnOrders[]
+}
+
+model Otp {
+  id            Int      @id @default(autoincrement())
+  phone         String   @db.VarChar(15)
+  otp           String   @db.VarChar(6)
+  rememberToken String
+  verifyToken   String?
+  count         Int      @default(0) @db.SmallInt
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime
+  error         Int      @default(0) @db.SmallInt
 }
 
 model Post {
@@ -46,13 +44,13 @@ model Post {
   body       String
   image      String
   authorId   Int
-  author     User     @relation(fields: [authorId], references: [id])
   categoryId Int
-  category   Category @relation(fields: [categoryId], references: [id])
   typeId     Int
-  type       Type     @relation(fields: [typeId], references: [id])
   createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  updatedAt  DateTime
+  author     User     @relation(fields: [authorId], references: [id])
+  category   Category @relation(fields: [categoryId], references: [id])
+  type       Type     @relation(fields: [typeId], references: [id])
 }
 
 model Product {
@@ -65,20 +63,44 @@ model Product {
   inventory   Int                @default(0)
   status      Status             @default(ACTIVE)
   categoryId  Int
-  category    Category           @relation(fields: [categoryId], references: [id])
   typeId      Int
-  type        Type               @relation(fields: [typeId], references: [id])
-  images      image[]
   createdAt   DateTime           @default(now())
-  updatedAt   DateTime           @updatedAt
+  updatedAt   DateTime
+  category    Category           @relation(fields: [categoryId], references: [id])
+  type        Type               @relation(fields: [typeId], references: [id])
   orders      ProductsOnOrders[]
+  image       image[]
 }
 
-model image {
+model ProductsOnOrders {
   id        Int     @id @default(autoincrement())
-  path      String  @db.VarChar(255)
+  orderId   Int
   productId Int
+  quantity  Int     @db.SmallInt
+  price     Decimal @db.Decimal(10, 2)
+  order     Order   @relation(fields: [orderId], references: [id])
   product   Product @relation(fields: [productId], references: [id])
+}
+
+model Tag {
+  id   Int        @id @default(autoincrement())
+  name String     @db.VarChar(52)
+  tags Taggable[]
+}
+
+model Taggable {
+  id     Int    @id @default(autoincrement())
+  tagId  Int
+  type   String @db.VarChar(7)
+  typeId Int
+  tag    Tag    @relation(fields: [tagId], references: [id])
+}
+
+model Type {
+  id       Int       @id @default(autoincrement())
+  name     String    @db.VarChar(52)
+  posts    Post[]
+  products Product[]
 }
 
 model User {
@@ -95,54 +117,26 @@ model User {
   randToken       String
   image           String?
   createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  posts           Post[]
+  updatedAt       DateTime
   orders          Order[]
+  posts           Post[]
 }
 
-model Tag {
-  id       Int        @id @default(autoincrement())
-  name     String     @db.VarChar(52)
-  taggable Taggable[]
-}
-
-model Taggable {
-  id     Int    @id @default(autoincrement())
-  tagId  Int
-  tag    Tag    @relation(fields: [tagId], references: [id])
-  type   String @db.VarChar(7)
-  typeId Int
-}
-
-model Order {
-  id         Int                @id @default(autoincrement())
-  userId     Int
-  user       User               @relation(fields: [userId], references: [id])
-  code       String             @db.VarChar(15)
-  totalPrice Decimal            @db.Decimal(10, 2)
-  createdAt  DateTime           @default(now())
-  updatedAt  DateTime           @updatedAt
-  products   ProductsOnOrders[]
-}
-
-model ProductsOnOrders {
+model image {
   id        Int     @id @default(autoincrement())
-  orderId   Int
-  order     Order   @relation(fields: [orderId], references: [id])
+  path      String  @db.VarChar(255)
   productId Int
   product   Product @relation(fields: [productId], references: [id])
-  quantity  Int     @db.SmallInt
-  price     Decimal @db.Decimal(10, 2)
 }
 
-model Otp {
-  id            Int      @id @default(autoincrement())
-  phone         String   @db.VarChar(15)
-  otp           String   @db.VarChar(6)
-  rememberToken String
-  verifyToken   String?
-  count         Int      @default(0) @db.SmallInt
-  error         Int      @default(0) @db.SmallInt
-  createdAt     DateTime @default(now())
-  updatedAt     DateTime @updatedAt
+enum Role {
+  USER
+  ADMIN
+  AUTHOR
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+  FREEZE
 }
