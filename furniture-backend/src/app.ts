@@ -5,9 +5,10 @@ import cors from "cors";
 import morgan from "morgan";
 
 import { limiter } from "./middlewares/rateLimiter";
-import healthRoutes from "./routes/v1/health";
-import viewRoutes from "./routes/v1/web/view";
-import * as errorController from "./controllers/web/errorController";
+// import healthRoutes from "./routes/v1/health";
+import authRoutes from "./routes/v1/auth";
+// import viewRoutes from "./routes/v1/web/view";
+// import * as errorController from "./controllers/web/errorController";
 
 export const app = express();
 
@@ -25,10 +26,11 @@ app
 
 app.use(express.static("public"));
 
-app.use("/api/v1", healthRoutes);
-app.use(viewRoutes);
+// app.use("/api/v1", healthRoutes);
+// app.use(viewRoutes);
+app.use("/api/v1", authRoutes);
 
-app.use(errorController.notFound);
+// app.use(errorController.notFound);
 
 app.use((error: any, req: Request, res: Response, next: NextFunction) => {
   const status = error.status || 500;

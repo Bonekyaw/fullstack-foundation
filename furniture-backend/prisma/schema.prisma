@@ -20,20 +20,20 @@ model Order {
   code       String             @db.VarChar(15)
   totalPrice Decimal            @db.Decimal(10, 2)
   createdAt  DateTime           @default(now())
-  updatedAt  DateTime
+  updatedAt  DateTime           @updatedAt
   User       User               @relation(fields: [userId], references: [id])
   products   ProductsOnOrders[]
 }
 
 model Otp {
   id            Int      @id @default(autoincrement())
-  phone         String   @db.VarChar(15)
-  otp           String   @db.VarChar(6)
+  phone         String   @unique @db.VarChar(15)
+  otp           String
   rememberToken String
   verifyToken   String?
   count         Int      @default(0) @db.SmallInt
   createdAt     DateTime @default(now())
-  updatedAt     DateTime
+  updatedAt     DateTime @updatedAt
   error         Int      @default(0) @db.SmallInt
 }
 
@@ -47,7 +47,7 @@ model Post {
   categoryId Int
   typeId     Int
   createdAt  DateTime @default(now())
-  updatedAt  DateTime
+  updatedAt  DateTime @updatedAt
   author     User     @relation(fields: [authorId], references: [id])
   category   Category @relation(fields: [categoryId], references: [id])
   type       Type     @relation(fields: [typeId], references: [id])
@@ -65,7 +65,7 @@ model Product {
   categoryId  Int
   typeId      Int
   createdAt   DateTime           @default(now())
-  updatedAt   DateTime
+  updatedAt   DateTime           @updatedAt
   category    Category           @relation(fields: [categoryId], references: [id])
   type        Type               @relation(fields: [typeId], references: [id])
   orders      ProductsOnOrders[]
@@ -107,7 +107,7 @@ model User {
   id              Int       @id @default(autoincrement())
   firstName       String?   @db.VarChar(52)
   lastName        String?   @db.VarChar(52)
-  phone           String    @db.VarChar(15)
+  phone           String    @unique @db.VarChar(15)
   password        String
   email           String?   @unique @db.VarChar(52)
   role            Role      @default(USER)
@@ -117,7 +117,7 @@ model User {
   randToken       String
   image           String?
   createdAt       DateTime  @default(now())
-  updatedAt       DateTime
+  updatedAt       DateTime  @updatedAt
   orders          Order[]
   posts           Post[]
 }
