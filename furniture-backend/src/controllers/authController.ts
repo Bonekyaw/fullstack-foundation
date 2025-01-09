@@ -161,7 +161,7 @@ export const verifyOtp = [
     // OTP is expired
     const isExpired = moment().diff(otpRow!.updatedAt, "minutes") > 2;
     if (isExpired) {
-      const error: any = new Error("OTP is expired");
+      const error: any = new Error("OTP is expired.");
       error.status = 403;
       error.code = "Error_Expired";
       return next(error);
@@ -184,7 +184,7 @@ export const verifyOtp = [
         await updateOtp(otpRow!.id, otpData);
       }
 
-      const error: any = new Error("OTP is incorrect");
+      const error: any = new Error("OTP is incorrect.");
       error.status = 401;
       error.code = "Error_Invalid";
       return next(error);
@@ -197,10 +197,11 @@ export const verifyOtp = [
       error: 0,
       count: 1,
     };
+
     const result = await updateOtp(otpRow!.id, otpData);
 
     res.status(200).json({
-      message: "OTP is successfully verified",
+      message: "OTP is successfully verified.",
       phone: result.phone,
       token: result.verifyToken,
     });
