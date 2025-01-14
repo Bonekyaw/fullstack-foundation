@@ -400,7 +400,7 @@ export const login = [
         }
       }
       // --------- Ending -----------------------
-      const error: any = new Error("Password is wrong.");
+      const error: any = new Error(req.t("wrongPasswd"));
       error.status = 401;
       error.code = errorCode.invalid;
       return next(error);
@@ -478,6 +478,13 @@ export const logout = async (
     error.status = 401;
     error.code = errorCode.unauthenticated;
     return next(error);
+  }
+
+  if (isNaN(decoded.id)) {
+    const err: any = new Error("You are not an authenticated user.");
+    err.status = 401;
+    err.code = errorCode.unauthenticated;
+    return next(err);
   }
 
   const user = await getUserById(decoded.id);
