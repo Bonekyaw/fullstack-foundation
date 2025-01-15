@@ -12,9 +12,10 @@ import path from "path";
 
 import { limiter } from "./middlewares/rateLimiter";
 import { auth } from "./middlewares/auth";
+import { authorise } from "./middlewares/authorise";
 // import healthRoutes from "./routes/v1/health";
 import authRoutes from "./routes/v1/auth";
-import userRoutes from "./routes/v1/admin/user";
+import adminRoutes from "./routes/v1/admin/user";
 import profileRoutes from "./routes/v1/api/user";
 // import viewRoutes from "./routes/v1/web/view";
 // import * as errorController from "./controllers/web/errorController";
@@ -77,7 +78,7 @@ app.use(express.static("public"));
 // app.use("/api/v1", healthRoutes);
 // app.use(viewRoutes);
 app.use("/api/v1", authRoutes);
-app.use("/api/v1/admins", auth, userRoutes);
+app.use("/api/v1/admins", auth, authorise(true, "ADMIN"), adminRoutes);
 app.use("/api/v1", profileRoutes);
 
 // app.use(errorController.notFound);

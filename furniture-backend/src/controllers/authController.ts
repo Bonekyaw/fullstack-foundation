@@ -291,7 +291,7 @@ export const confirmPassword = [
       accessTokenPayload,
       process.env.ACCESS_TOKEN_SECRET!,
       {
-        expiresIn: 60 * 2, // 2 min in dev but 5 or 15 min in production
+        expiresIn: 60 * 10, // 10 min
       }
     );
 
@@ -414,7 +414,7 @@ export const login = [
       accessTokenPayload,
       process.env.ACCESS_TOKEN_SECRET!,
       {
-        expiresIn: 60 * 2, // 2 min in dev but 5 or 15 min in production
+        expiresIn: 60 * 10, // 10 min
       }
     );
 
