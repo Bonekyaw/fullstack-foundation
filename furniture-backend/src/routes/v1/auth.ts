@@ -5,6 +5,9 @@ import {
   confirmPassword,
   login,
   logout,
+  forgetPassword,
+  verifyOtpForPassword,
+  resetPassword,
 } from "../../controllers/authController";
 
 const router = express.Router();
@@ -15,5 +18,8 @@ router.post("/confirm-password", confirmPassword);
 router.post("/login", login);
 router.post("/logout", logout);
 
-// router.post("/refresh-token", setRefreshToken);
+router.post("/forget-password", forgetPassword);
+router.post("/verify", verifyOtpForPassword);
+router.post("/reset-password", resetPassword);
+
 export default router;
