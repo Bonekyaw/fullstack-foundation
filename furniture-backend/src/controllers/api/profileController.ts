@@ -1,9 +1,13 @@
 import { Request, Response, NextFunction } from "express";
 import { body, query, validationResult } from "express-validator";
+import { unlink } from "node:fs/promises";
+import path from "path";
+
 import { errorCode } from "../../../config/errorCode";
 import { authorise } from "../../utils/authorise";
-import { getUserById } from "../../services/authService";
+import { getUserById, updateUser } from "../../services/authService";
 import { checkUserIfNotExist } from "../../utils/auth";
+import { checkUploadFile } from "../../utils/check";
 interface CustomRequest extends Request {
   userId?: number;
 }
@@ -50,4 +54,65 @@ export const testPermission = async (
   }
 
   res.status(200).json({ info });
+};
+
+export const uploadProfile = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const userId = req.userId;
+  const image = req.file;
+  const user = await getUserById(userId!);
+  checkUserIfNotExist(user);
+  checkUploadFile(image);
+
+  // console.log("Image -----", image);
+  const fileName = image!.filename;
+  // const filePath = image!.path;
+  // const filePath = image!.path.replace("\\", "/");
+
+  if (user?.image) {
+    try {
+      const filePath = path.join(
+        __dirname,
+        "../../..",
+        "/uploads/images",
+        user!.image!
+      );
+      await unlink(filePath);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  const userData = {
+    image: fileName,
+  };
+  await updateUser(user?.id!, userData);
+
+  res.status(200).json({
+    message: "Profile picture uploaded successfully.",
+    image: fileName,
+  });
+};
+
+// Just testing restricted access
+export const testRestrictedAccess = (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const file = path.join(
+    __dirname,
+    "../../..",
+    "/uploads/images",
+    "1737539747697-604196673-MDC.png"
+  );
+
+  res.sendFile(file, (err) => {
+    if (err) {
+      res.status(404).send("File not found");
+    }
+  });
 };
