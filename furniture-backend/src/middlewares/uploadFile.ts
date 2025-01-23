@@ -36,7 +36,13 @@ const fileFilter = (
 const upload = multer({
   storage: fileStorage,
   fileFilter,
-  limits: { fileSize: 1024 * 1024 * 2 }, // Testing 2MB. Maximum file size is 10MB. So, image optimaization is needed.
+  limits: { fileSize: 1024 * 1024 * 2 }, // Testing purpose 2MB
+});
+
+export const uploadMemory = multer({
+  storage: multer.memoryStorage(),
+  fileFilter,
+  limits: { fileSize: 1024 * 1024 * 10 }, // Maximum file size is 10MB, so image optimization is needed.
 });
 
 export default upload;

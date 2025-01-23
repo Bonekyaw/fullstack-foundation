@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { body, query, validationResult } from "express-validator";
 import { unlink } from "node:fs/promises";
 import path from "path";
+import sharp from "sharp";
 
 import { errorCode } from "../../../config/errorCode";
 import { authorise } from "../../utils/authorise";
@@ -97,8 +98,8 @@ export const uploadProfile = async (
   });
 };
 
-// Just testing restricted access
-export const testRestrictedAccess = (
+// Just for testing
+export const getMyPhoto = async (
   req: CustomRequest,
   res: Response,
   next: NextFunction
@@ -107,12 +108,77 @@ export const testRestrictedAccess = (
     __dirname,
     "../../..",
     "/uploads/images",
-    "1737539747697-604196673-MDC.png"
+    "1737539747697-604196673-MDC.png" // user.image
   );
 
   res.sendFile(file, (err) => {
-    if (err) {
-      res.status(404).send("File not found");
+    res.status(404).send("File not found");
+  });
+};
+
+export const uploadProfileMultiple = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  console.log("req.files -------", req.files);
+
+  res.status(200).json({
+    message: "Multiple Profile pictures uploaded successfully.",
+  });
+};
+
+export const uploadProfileOptimize = async (
+  req: CustomRequest,
+  res: Response,
+  next: NextFunction
+) => {
+  const userId = req.userId;
+  const image = req.file;
+  const user = await getUserById(userId!);
+  checkUserIfNotExist(user);
+  checkUploadFile(image);
+
+  const fileName = Date.now() + "-" + `${Math.round(Math.random() * 1e9)}.webp`;
+
+  try {
+    const optimizedImagePath = path.join(
+      __dirname,
+      "../../..",
+      "/uploads/images",
+      fileName
+    );
+    await sharp(req.file?.buffer)
+      .resize(200, 200)
+      .webp({ quality: 50 })
+      .toFile(optimizedImagePath);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Image optimization failed." });
+    return;
+  }
+
+  if (user?.image) {
+    try {
+      const filePath = path.join(
+        __dirname,
+        "../../..",
+        "/uploads/images",
+        user!.image!
+      );
+      await unlink(filePath);
+    } catch (error) {
+      console.log(error);
     }
+  }
+
+  const userData = {
+    image: fileName,
+  };
+  await updateUser(user?.id!, userData);
+
+  res.status(200).json({
+    message: "Profile picture uploaded successfully.",
+    image: fileName,
   });
 };
