@@ -19,7 +19,7 @@ router.patch("/profile/upload", auth, upload.single("avatar"), uploadProfile);
 router.patch(
   "/profile/upload/optimize",
   auth,
-  uploadMemory.single("avatar"),
+  upload.single("avatar"),
   uploadProfileOptimize
 );
 router.patch(
