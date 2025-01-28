@@ -9,6 +9,10 @@ import {
 } from "../../../controllers/api/profileController";
 import { auth } from "../../../middlewares/auth";
 import upload, { uploadMemory } from "../../../middlewares/uploadFile";
+import {
+  getPostsByPagination,
+  getPost,
+} from "../../../controllers/api/postController";
 
 const router = express.Router();
 
@@ -30,5 +34,8 @@ router.patch(
 );
 
 router.get("/profile/my-photo", getMyPhoto); // Just for testing
+
+router.get("/posts", auth, getPostsByPagination);
+router.get("/posts/:id", auth, getPost);
 
 export default router;

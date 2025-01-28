@@ -9,7 +9,7 @@ datasource db {
 
 model Category {
   id       Int       @id @default(autoincrement())
-  name     String    @db.VarChar(52)
+  name     String    @unique @db.VarChar(52)
   posts    Post[]
   products Product[]
 }
@@ -38,19 +38,20 @@ model Otp {
 }
 
 model Post {
-  id         Int      @id @default(autoincrement())
-  title      String   @db.VarChar(255)
+  id         Int       @id @default(autoincrement())
+  title      String    @db.VarChar(255)
   content    String
   body       String
   image      String
   authorId   Int
   categoryId Int
   typeId     Int
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
-  author     User     @relation(fields: [authorId], references: [id])
-  category   Category @relation(fields: [categoryId], references: [id])
-  type       Type     @relation(fields: [typeId], references: [id])
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  author     User      @relation(fields: [authorId], references: [id])
+  category   Category  @relation(fields: [categoryId], references: [id])
+  type       Type      @relation(fields: [typeId], references: [id])
+  tags       PostTag[]
 }
 
 model Product {
@@ -70,6 +71,7 @@ model Product {
   type        Type               @relation(fields: [typeId], references: [id])
   orders      ProductsOnOrders[]
   image       image[]
+  tags        ProductTag[]
 }
 
 model ProductsOnOrders {
@@ -82,23 +84,35 @@ model ProductsOnOrders {
   product   Product @relation(fields: [productId], references: [id])
 }
 
-model Tag {
-  id   Int        @id @default(autoincrement())
-  name String     @db.VarChar(52)
-  tags Taggable[]
+model PostTag {
+  id    Int    @id @default(autoincrement())
+  name  String @unique @db.VarChar(52)
+  posts Post[]
 }
 
-model Taggable {
-  id     Int    @id @default(autoincrement())
-  tagId  Int
-  type   String @db.VarChar(7)
-  typeId Int
-  tag    Tag    @relation(fields: [tagId], references: [id])
+model ProductTag {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique @db.VarChar(52)
+  products Product[]
 }
+
+// model Tag {
+//   id   Int        @id @default(autoincrement())
+//   name String     @db.VarChar(52)
+//   tags Taggable[]
+// }
+
+// model Taggable {
+//   id     Int    @id @default(autoincrement())
+//   tagId  Int
+//   type   String @db.VarChar(7)
+//   typeId Int
+//   tag    Tag    @relation(fields: [tagId], references: [id])
+// }
 
 model Type {
   id       Int       @id @default(autoincrement())
-  name     String    @db.VarChar(52)
+  name     String    @unique @db.VarChar(52)
   posts    Post[]
   products Product[]
 }
