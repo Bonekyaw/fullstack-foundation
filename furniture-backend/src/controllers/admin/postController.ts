@@ -253,7 +253,7 @@ export const updatePost = [
 ];
 
 export const deletePost = [
-  body("postId", "Post Id is required.").trim().notEmpty().isInt({ min: 1 }),
+  body("postId", "Post Id is required.").isInt({ gt: 0 }),
   async (req: CustomRequest, res: Response, next: NextFunction) => {
     const errors = validationResult(req).array({ onlyFirstError: true });
     // If validation error occurs
@@ -280,11 +280,9 @@ export const deletePost = [
     const optimizedFile = post!.image.split(".")[0] + ".webp";
     await removeFiles(post!.image, optimizedFile);
 
-    res
-      .status(200)
-      .json({
-        message: "Successfully deleted the post.",
-        postId: postDeleted.id,
-      });
+    res.status(200).json({
+      message: "Successfully deleted the post.",
+      postId: postDeleted.id,
+    });
   },
 ];

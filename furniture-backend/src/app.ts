@@ -72,7 +72,7 @@ i18next
 app.use(middleware.handle(i18next));
 
 app.use(express.static("public"));
-// app.use(express.static("uploads"));
+app.use(express.static("uploads"));
 
 app.use(routes);
 
