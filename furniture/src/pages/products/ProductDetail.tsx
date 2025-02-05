@@ -40,7 +40,7 @@ function ProductDetail() {
           <Icons.arrowLeft /> All Products
         </Link>
       </Button>
-      <section className="mg:gap-16 my-6 flex flex-col gap-16 md:flex-row">
+      <section className="my-6 flex flex-col gap-6 md:flex-row md:gap-16">
         <Carousel plugins={[plugin.current]} className="w-full md:w-1/2">
           <CarouselContent>
             {product?.images.map((image) => (
@@ -60,12 +60,12 @@ function ProductDetail() {
         <div className="flex w-full flex-col gap-4 md:w-1/2">
           <div className="space-y-2">
             <h2 className="line-clamp-1 text-2xl font-bold">{product?.name}</h2>
-            <p className="text-base text-muted-foreground">
+            <p className="text-muted-foreground text-base">
               {formatPrice(Number(product?.price))}
             </p>
           </div>
           <Separator className="my-1.5" />
-          <p className="text-base text-muted-foreground">
+          <p className="text-muted-foreground text-base">
             {product?.inventory} in stock
           </p>
           <div className="flex items-center justify-between">

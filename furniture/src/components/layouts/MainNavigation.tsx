@@ -36,7 +36,7 @@ export default function MainNavigation({ items }: MainNavigationProps) {
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <Link
-                        className="flex size-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        className="flex size-full select-none flex-col justify-end rounded-md bg-linear-to-b from-muted/50 to-muted p-6 no-underline outline-hidden focus:shadow-md"
                         to="/"
                       >
                         <Icons.logo className="size-6" aria-hidden="true" />
@@ -89,7 +89,7 @@ const ListItem = React.forwardRef<
           ref={ref}
           to={String(href)}
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-hidden transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
             className,
           )}
           {...props}
