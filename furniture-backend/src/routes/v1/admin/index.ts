@@ -8,6 +8,7 @@ import {
   updatePost,
   deletePost,
 } from "../../../controllers/admin/postController";
+import { createProduct } from "../../../controllers/admin/productController";
 
 const router = express.Router();
 
@@ -18,5 +19,10 @@ router.post("/maintenance", setMaintenance);
 router.post("/posts", upload.single("image"), createPost);
 router.patch("/posts", upload.single("image"), updatePost);
 router.delete("/posts", deletePost);
+
+// CRUD for Products
+router.post("/products", upload.array("images", 4), createProduct);
+// router.patch("/products", upload.array("images", 4), updateProduct);
+// router.delete("/products", deleteProduct);
 
 export default router;
