@@ -5,10 +5,8 @@ import { unlink } from "node:fs/promises";
 import path from "path";
 
 import { errorCode } from "../../../config/errorCode";
-import { checkUserIfNotExist } from "../../utils/auth";
 import { checkModelIfExist, checkUploadFile } from "../../utils/check";
 import { createError } from "../../utils/error";
-import { getUserById } from "../../services/authService";
 import ImageQueue from "../../jobs/queues/imageQueue";
 import {
   createOnePost,
@@ -151,7 +149,7 @@ export const createPost = [
 ];
 
 export const updatePost = [
-  body("postId", "Post Id is required.").trim().notEmpty().isInt({ min: 1 }),
+  body("postId", "Post Id is required.").isInt({ min: 1 }),
   body("title", "Title is required.").trim().notEmpty().escape(),
   body("content", "Content is required.").trim().notEmpty().escape(),
   body("body", "Body is required.")

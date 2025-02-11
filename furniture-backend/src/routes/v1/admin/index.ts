@@ -8,7 +8,11 @@ import {
   updatePost,
   deletePost,
 } from "../../../controllers/admin/postController";
-import { createProduct } from "../../../controllers/admin/productController";
+import {
+  createProduct,
+  updateProduct,
+  deleteProduct,
+} from "../../../controllers/admin/productController";
 
 const router = express.Router();
 
@@ -22,7 +26,7 @@ router.delete("/posts", deletePost);
 
 // CRUD for Products
 router.post("/products", upload.array("images", 4), createProduct);
-// router.patch("/products", upload.array("images", 4), updateProduct);
-// router.delete("/products", deleteProduct);
+router.patch("/products", upload.array("images", 4), updateProduct);
+router.delete("/products", deleteProduct);
 
 export default router;
