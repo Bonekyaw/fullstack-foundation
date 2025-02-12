@@ -64,8 +64,5 @@
     "node-cron": "^3.0.3",
     "sanitize-html": "^2.14.0",
     "sharp": "^0.33.5"
-  },
-  "prisma": {
-    "seed": "ts-node prisma/seed.ts"
   }
 }
