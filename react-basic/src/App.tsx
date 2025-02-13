@@ -11,11 +11,11 @@ const App = () => {
   const [isSmartMode, setIsSmartMode] = useState(false); // true
   const [initialValue, setInitialValue] = useState(0);
 
-  const onSetupHandler = (inputValue: number) => {
+  const onSetupHandler = useCallback((inputValue: number) => {
     console.log("onSetupHandler in App - function called");
 
     setInitialValue(inputValue);
-  };
+  }, []);
 
   const modeHandler = useCallback(() => {
     console.log("modeHandler in App - function called");
@@ -27,7 +27,7 @@ const App = () => {
     <div className={isSmartMode ? "bg-smart" : ""}>
       <Title onChangeMode={modeHandler} />
       <InitialSetup onSetup={onSetupHandler} />
-      <Counter initialValue={initialValue} />
+      <Counter key={initialValue} initialValue={initialValue} />
     </div>
   );
 };

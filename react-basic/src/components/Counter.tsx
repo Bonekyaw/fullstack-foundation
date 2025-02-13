@@ -26,12 +26,12 @@ const Counter = ({ initialValue }: CounterProps) => {
     [initialValue]
   ); // 7
 
-  const [count, setCount] = useState<number>(0);
+  const [count, setCount] = useState<number>(expensiveComputedValue);
 
   // Update count when initialValue changes
-  useEffect(() => {
-    setCount(expensiveComputedValue);
-  }, [expensiveComputedValue]);
+  // useEffect(() => {
+  //   setCount(expensiveComputedValue);
+  // }, [expensiveComputedValue]);
 
   return (
     <>
@@ -43,4 +43,4 @@ const Counter = ({ initialValue }: CounterProps) => {
   );
 };
 
-export default Counter;
+export default React.memo(Counter);
