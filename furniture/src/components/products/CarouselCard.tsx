@@ -8,7 +8,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import { Product } from "@/types";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 interface ProductProps {
   products: Product[];
@@ -42,7 +42,7 @@ export default function CarouselCard({ products }: ProductProps) {
                 </p>
                 <Link
                   to={`/products/${product.id}`}
-                  className="text-sm font-semibold text-own hover:underline"
+                  className="text-own text-sm font-semibold hover:underline"
                 >
                   Read More
                 </Link>

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
@@ -55,7 +55,7 @@ function ProductCard({ product, className }: ProductProps) {
             Sold Out
           </Button>
         ) : (
-          <Button size="sm" className="h-8 w-full rounded-sm bg-own font-bold">
+          <Button size="sm" className="bg-own h-8 w-full rounded-sm font-bold">
             <Icons.plus className="" /> Add To Cart
           </Button>
         )}

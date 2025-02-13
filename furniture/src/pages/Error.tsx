@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 import Header from "@/components/layouts/Header";
 import { Button } from "@/components/ui/button";
@@ -20,9 +20,9 @@ function Error() {
       <main className="mx-auto my-32 flex flex-1 items-center">
         <Card className="w-[350px] md:w-[500px] lg:w-[500px]">
           <CardHeader className="flex place-items-center gap-2">
-            <div className="mb-4 mt-2 grid size-24 place-items-center rounded-full border border-dashed border-muted-foreground/70">
+            <div className="border-muted-foreground/70 mt-2 mb-4 grid size-24 place-items-center rounded-full border border-dashed">
               <Icons.exclamation
-                className="size-10 text-muted-foreground/70"
+                className="text-muted-foreground/70 size-10"
                 aria-hidden="true"
               />
             </div>

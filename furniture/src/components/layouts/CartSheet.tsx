@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
@@ -32,7 +32,7 @@ export default function CartSheet() {
         >
           <Badge
             variant="destructive"
-            className="absolute -right-2 -top-2 size-6 justify-center rounded-full p-2.5"
+            className="absolute -top-2 -right-2 size-6 justify-center rounded-full p-2.5"
           >
             {itemCount}
           </Badge>
@@ -82,8 +82,8 @@ export default function CartSheet() {
           </>
         ) : (
           <div className="flex h-full flex-col items-center justify-center space-y-1">
-            <Icons.cart className="mb-4 size-16 text-muted-foreground" />
-            <div className="text-xl font-medium text-muted-foreground">
+            <Icons.cart className="text-muted-foreground mb-4 size-16" />
+            <div className="text-muted-foreground text-xl font-medium">
               Your cart is empty
             </div>
           </div>

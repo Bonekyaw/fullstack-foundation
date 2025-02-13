@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -36,14 +36,14 @@ export default function MainNavigation({ items }: MainNavigationProps) {
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <Link
-                        className="flex size-full select-none flex-col justify-end rounded-md bg-linear-to-b from-muted/50 to-muted p-6 no-underline outline-hidden focus:shadow-md"
+                        className="from-muted/50 to-muted flex size-full flex-col justify-end rounded-md bg-linear-to-b p-6 no-underline outline-hidden select-none focus:shadow-md"
                         to="/"
                       >
                         <Icons.logo className="size-6" aria-hidden="true" />
-                        <div className="mb-2 mt-4 text-lg font-medium">
+                        <div className="mt-4 mb-2 text-lg font-medium">
                           {siteConfig.name}
                         </div>
-                        <p className="text-sm leading-tight text-muted-foreground">
+                        <p className="text-muted-foreground text-sm leading-tight">
                           {siteConfig.description}
                         </p>
                       </Link>
@@ -89,13 +89,13 @@ const ListItem = React.forwardRef<
           ref={ref}
           to={String(href)}
           className={cn(
-            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-hidden transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground",
+            "hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground block space-y-1 rounded-md p-3 leading-none no-underline outline-hidden transition-colors select-none",
             className,
           )}
           {...props}
         >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
+          <div className="text-sm leading-none font-medium">{title}</div>
+          <p className="text-muted-foreground line-clamp-2 text-sm leading-snug">
             {children}
           </p>
         </Link>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams } from "react-router";
 
 import { products } from "@/data/products";
 import { Button } from "@/components/ui/button";

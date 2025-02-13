@@ -1,5 +1,5 @@
 import type { Post } from "@/types";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 interface PostProps {
   posts: Post[];

@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import type { User } from "@/types";
 import { Button } from "@/components/ui/button";
 import {
@@ -45,10 +45,10 @@ function AuthDropDown({ user }: UserProps) {
       <DropdownMenuContent className="w-56" align="end" forceMount>
         <DropdownMenuLabel className="font-normal">
           <div className="flex flex-col space-y-1">
-            <p className="text-sm font-medium leading-none">
+            <p className="text-sm leading-none font-medium">
               {user.firstName} {user.lastName}
             </p>
-            <p className="text-sm leading-none text-muted-foreground">
+            <p className="text-muted-foreground text-sm leading-none">
               {user.email}
             </p>
           </div>

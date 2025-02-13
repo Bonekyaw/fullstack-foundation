@@ -1,5 +1,5 @@
 import type { Post } from "@/types";
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 
 interface PostProps {
   posts: Post[];
@@ -16,7 +16,7 @@ function BlogCard({ posts }: PostProps) {
             className="mb-4 w-full rounded-2xl"
           />
           <h3 className="ml-4 line-clamp-1 font-semibold">{post.title}</h3>
-          <div className="ml-4 mt-2 text-sm">
+          <div className="mt-2 ml-4 text-sm">
             <span>
               by<span className="font-semibold"> {post.author} </span>on
               <span className="font-semibold"> {post.updated_at}</span>

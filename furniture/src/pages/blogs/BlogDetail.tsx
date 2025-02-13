@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link } from "react-router";
 import { posts } from "@/data/posts";
 import { Icons } from "@/components/icons";
 import { Button } from "@/components/ui/button";
@@ -12,7 +12,7 @@ function BlogDetail() {
     <div className="container mx-auto px-4 lg:px-0">
       <section className="flex flex-col lg:flex-row">
         <section className="w-full lg:w-3/4 lg:pr-16">
-          <Button variant="outline" asChild className="mb-6 mt-8">
+          <Button variant="outline" asChild className="mt-8 mb-6">
             <Link to="/blogs">
               <Icons.arrowLeft />
               All Posts
@@ -41,7 +41,7 @@ function BlogDetail() {
               </div>
             </>
           ) : (
-            <p className="mb-16 mt-8 text-center text-xl font-bold text-muted-foreground lg:mt-24">
+            <p className="text-muted-foreground mt-8 mb-16 text-center text-xl font-bold lg:mt-24">
               No post found
             </p>
           )}
@@ -62,7 +62,7 @@ function BlogDetail() {
                   alt="blog post"
                   className="w-1/4 rounded"
                 />
-                <div className="w-3/4 text-sm font-[500] text-muted-foreground">
+                <div className="text-muted-foreground w-3/4 text-sm font-[500]">
                   <p className="line-clamp-2">{post.content}</p>
                   <i>... see more</i>
                 </div>

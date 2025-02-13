@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { useState, useEffect } from "react";
 import type { MainNavItem } from "@/types";
 import { Icons } from "@/components/icons";

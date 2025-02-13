@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link } from "react-router";
 import { siteConfig } from "@/config/site";
 import { Icons } from "@/components/icons";
 import NewsLetterForm from "@/components/news-letter";
@@ -6,7 +6,7 @@ import NewsLetterForm from "@/components/news-letter";
 function Footer() {
   return (
     <footer className="ml-4 w-full border-t lg:ml-0">
-      <div className="container mx-auto pb-8 pt-6 lg:py-6">
+      <div className="container mx-auto pt-6 pb-8 lg:py-6">
         <section className="flex flex-col gap-10 lg:flex-row lg:justify-between lg:gap-20">
           <section>
             <Link to="/" className="flex items-center space-x-2">
@@ -25,7 +25,7 @@ function Footer() {
                       <Link
                         to={item.href}
                         target={item.external ? "_blank" : undefined}
-                        className="text-sm text-muted-foreground hover:text-foreground"
+                        className="text-muted-foreground hover:text-foreground text-sm"
                       >
                         {item.title}
                         <span className="sr-only">{item.title}</span>
