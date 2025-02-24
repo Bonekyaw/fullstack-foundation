@@ -7,8 +7,8 @@ function Login() {
   return (
     <div className="relative">
       <Link
-        to="/"
-        className="text-foreground/80 hover:text-foreground fixed top-6 left-8 flex items-center text-lg font-bold tracking-tight transition-colors"
+        to="#"
+        className="fixed left-8 top-6 flex items-center text-lg font-bold tracking-tight text-foreground/80 transition-colors hover:text-foreground"
       >
         <Icons.logo className="mr-2 size-6" aria-hidden="true" />
         <span>Furniture Shop</span>
@@ -17,11 +17,11 @@ function Login() {
         <div className="flex w-full place-items-center px-4">
           <LoginForm />
         </div>
-        <div className="relative hidden size-full lg:block">
+        <div className="relative hidden lg:block">
           <img
             src={Banner}
             alt="Furniture Shop"
-            className="absolute inset-0 object-cover"
+            className="absolute inset-0 h-full w-full object-cover"
           />
         </div>
       </main>
