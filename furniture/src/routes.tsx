@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import { createBrowserRouter } from "react-router";
+import { createBrowserRouter, redirect } from "react-router";
 
 import RootLayout from "@/pages/RootLayout";
 import HomePage from "@/pages/Home";
@@ -20,6 +20,7 @@ import LoginPage from "@/pages/auth/Login";
 import RegisterPage from "@/pages/auth/Register";
 
 import { homeLoader } from "@/router/loader";
+import { loginAction, logoutAction } from "@/router/action";
 
 // const SuspenseFallback = () => <div className="text-center">Loading...</div>;
 
@@ -92,9 +93,15 @@ export const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
+    action: loginAction,
   },
   {
     path: "/register",
     element: <RegisterPage />,
+  },
+  {
+    path: "/logout",
+    action: logoutAction,
+    loader: () => redirect("/"),
   },
 ]);
