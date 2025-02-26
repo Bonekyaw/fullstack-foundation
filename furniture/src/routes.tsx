@@ -17,11 +17,12 @@ import ProductRootLayout from "@/pages/products/ProductRootLayout";
 import ProductPage from "@/pages/products/Product";
 import ProductDetailPage from "@/pages/products/ProductDetail";
 import LoginPage from "@/pages/auth/Login";
-import RegisterPage from "@/pages/auth/Register";
 
-import { homeLoader } from "@/router/loader";
+import { homeLoader, loginLoader } from "@/router/loader";
 import { loginAction, logoutAction } from "@/router/action";
-
+import AuthRootLayout from "@/pages/auth/AuthRootLayout";
+import SignUpPage from "@/pages/auth/SignUp";
+import OtpPage from "@/pages/auth/Otp";
 // const SuspenseFallback = () => <div className="text-center">Loading...</div>;
 
 export const router = createBrowserRouter([
@@ -93,11 +94,16 @@ export const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
+    loader: loginLoader,
     action: loginAction,
   },
   {
     path: "/register",
-    element: <RegisterPage />,
+    element: <AuthRootLayout />,
+    children: [
+      { index: true, element: <SignUpPage /> },
+      { path: "otp", element: <OtpPage /> },
+    ],
   },
   {
     path: "/logout",
