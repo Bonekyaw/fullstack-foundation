@@ -19,10 +19,11 @@ import ProductDetailPage from "@/pages/products/ProductDetail";
 import LoginPage from "@/pages/auth/Login";
 
 import { homeLoader, loginLoader } from "@/router/loader";
-import { loginAction, logoutAction } from "@/router/action";
+import { loginAction, logoutAction, registerAction } from "@/router/action";
 import AuthRootLayout from "@/pages/auth/AuthRootLayout";
 import SignUpPage from "@/pages/auth/SignUp";
 import OtpPage from "@/pages/auth/Otp";
+import ConfirmPasswordPage from "@/pages/auth/ConfirmPassword";
 // const SuspenseFallback = () => <div className="text-center">Loading...</div>;
 
 export const router = createBrowserRouter([
@@ -101,8 +102,14 @@ export const router = createBrowserRouter([
     path: "/register",
     element: <AuthRootLayout />,
     children: [
-      { index: true, element: <SignUpPage /> },
+      {
+        index: true,
+        element: <SignUpPage />,
+        loader: loginLoader,
+        action: registerAction,
+      },
       { path: "otp", element: <OtpPage /> },
+      { path: "confirm-password", element: <ConfirmPasswordPage /> },
     ],
   },
   {

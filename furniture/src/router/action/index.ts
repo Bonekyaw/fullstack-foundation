@@ -44,3 +44,24 @@ export const logoutAction = async () => {
     console.error("logout failed!", error);
   }
 };
+
+export const registerAction = async ({ request }: ActionFunctionArgs) => {
+  const formData = await request.formData();
+  const credentials = Object.fromEntries(formData);
+
+  try {
+    const response = await authApi.post("register", credentials);
+
+    if (response.status !== 200) {
+      return { error: response.data || "Sending OTP failed!" };
+    }
+
+    // client state management
+
+    return redirect("/register/otp");
+  } catch (error) {
+    if (error instanceof AxiosError) {
+      return error.response?.data || { error: "Sending OTP failed!" };
+    } else throw error;
+  }
+};
