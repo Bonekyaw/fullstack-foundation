@@ -17,6 +17,7 @@ import { formatPrice, cn } from "@/lib/utils";
 interface ProductProps extends React.HTMLAttributes<HTMLDivElement> {
   product: Product;
 }
+const imageUrl = import.meta.env.VITE_IMG_URL;
 
 function ProductCard({ product, className }: ProductProps) {
   return (
@@ -25,10 +26,11 @@ function ProductCard({ product, className }: ProductProps) {
         <CardHeader className="border-b p-0">
           <AspectRatio ratio={1 / 1} className="bg-muted">
             <img
-              src={product.images[0]}
+              src={imageUrl + product.images[0].path}
               alt="product image"
-              className="size-full object-cover"
               loading="lazy"
+              decoding="async"
+              className="size-full object-contain"
             />
           </AspectRatio>
         </CardHeader>
@@ -55,7 +57,7 @@ function ProductCard({ product, className }: ProductProps) {
             Sold Out
           </Button>
         ) : (
-          <Button size="sm" className="bg-own h-8 w-full rounded-sm font-bold">
+          <Button size="sm" className="h-8 w-full rounded-sm bg-own font-bold">
             <Icons.plus className="" /> Add To Cart
           </Button>
         )}

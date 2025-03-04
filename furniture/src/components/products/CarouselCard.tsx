@@ -14,6 +14,8 @@ interface ProductProps {
   products: Product[];
 }
 
+const imageUrl = import.meta.env.VITE_IMG_URL;
+
 export default function CarouselCard({ products }: ProductProps) {
   return (
     <Carousel
@@ -29,9 +31,11 @@ export default function CarouselCard({ products }: ProductProps) {
           <CarouselItem key={product.id} className="pl-1 lg:basis-1/3">
             <div className="flex gap-4 p-4 lg:px-4">
               <img
-                src={product.images[0]}
+                src={imageUrl + product.images[0].path}
                 alt={product.name}
-                className="size-28 rounded-md"
+                loading="lazy"
+                decoding="async"
+                className="h-28 rounded-md"
               />
               <div>
                 <h3 className="line-clamp-1 text-sm font-bold">
@@ -42,7 +46,7 @@ export default function CarouselCard({ products }: ProductProps) {
                 </p>
                 <Link
                   to={`/products/${product.id}`}
-                  className="text-own text-sm font-semibold hover:underline"
+                  className="text-sm font-semibold text-own hover:underline"
                 >
                   Read More
                 </Link>

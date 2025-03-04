@@ -11,11 +11,16 @@ export interface NavItemWithChildren extends NavItem {
 
 export type MainNavItem = NavItemWithChildren;
 
+type Image = {
+  id: number;
+  path: string;
+};
+
 export type Product = {
-  id: string;
+  id: number;
   name: string;
   description: string;
-  images: string[];
+  images: Image[];
   categoryId: string;
   price: number;
   discount: number;
@@ -24,15 +29,21 @@ export type Product = {
   status: string;
 };
 
+export type Tag = {
+  name: string;
+};
+
 export type Post = {
-  id: string;
-  author: string;
+  id: number;
+  author: {
+    fullName: string;
+  };
   title: string;
   content: string;
   image: string;
   body: string;
-  updated_at: string;
-  tags: string[];
+  updatedAt: string;
+  tags: Tag[];
 };
 
 export type Category = {
