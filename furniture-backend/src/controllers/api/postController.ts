@@ -134,7 +134,7 @@ export const getPostsByPagination = [
 export const getInfinitePostsByPagination = [
   query("cursor", "Cursor must be Post ID.").isInt({ gt: 0 }).optional(),
   query("limit", "Limit number must be unsigned integer.")
-    .isInt({ gt: 4 })
+    .isInt({ gt: 2 })
     .optional(),
   async (req: CustomRequest, res: Response, next: NextFunction) => {
     const errors = validationResult(req).array({ onlyFirstError: true });
@@ -167,7 +167,7 @@ export const getInfinitePostsByPagination = [
         },
       },
       orderBy: {
-        id: "asc",
+        id: "desc",
       },
     };
 
@@ -182,12 +182,13 @@ export const getInfinitePostsByPagination = [
       posts.pop();
     }
 
-    const newCursor = posts.length > 0 ? posts[posts.length - 1].id : null;
+    const nextCursor = posts.length > 0 ? posts[posts.length - 1].id : null;
 
     res.status(200).json({
       message: "Get All infinite posts",
       hasNextPage,
-      newCursor,
+      nextCursor,
+      prevCursor: lastCursor,
       posts,
     });
   },
