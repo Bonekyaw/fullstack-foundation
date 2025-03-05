@@ -1,13 +1,65 @@
 import { Link, useLoaderData } from "react-router";
+import { useQuery } from "@tanstack/react-query";
+
 import Couch from "@/data/images/couch.png";
 import { Button } from "@/components/ui/button";
 import CarouselCard from "@/components/products/CarouselCard";
 import BlogCard from "@/components/blogs/BlogCard";
 import ProductCard from "@/components/products/ProductCard";
 import { Product } from "@/types";
+import { postQuery, productQuery } from "@/api/query";
+import { Skeleton } from "@/components/ui/skeleton";
 
 function Home() {
-  const { productsData, postsData } = useLoaderData();
+  // const { productsData, postsData } = useLoaderData();
+
+  const {
+    data: productsData,
+    isLoading: isLoadingProduct,
+    isError: isErrorProduct,
+    error: errorProduct,
+    refetch: refetchProduct,
+  } = useQuery(productQuery("?limit=8"));
+  const {
+    data: postsData,
+    isLoading: isLoadingPost,
+    isError: isErrorPost,
+    error: errorPost,
+    refetch: refetchPost,
+  } = useQuery(postQuery("?limit=3"));
+
+  if (isLoadingProduct && isLoadingPost) {
+    return (
+      <div className="flex flex-col space-y-3">
+        <Skeleton className="h-[125px] w-[250px] rounded-xl" />
+        <div className="space-y-2">
+          <Skeleton className="h-4 w-[250px]" />
+          <Skeleton className="h-4 w-[200px]" />
+        </div>
+      </div>
+    );
+  }
+
+  if (isErrorProduct && isErrorPost) {
+    return (
+      <div className="container mx-auto my-32 flex flex-1 place-content-center">
+        <div className="text-center text-red-400">
+          <p className="mb-4">
+            {errorProduct.message} & {errorPost.message}
+          </p>
+          <Button
+            onClick={() => {
+              refetchProduct();
+              refetchPost();
+            }}
+            variant="secondary"
+          >
+            Retry
+          </Button>
+        </div>
+      </div>
+    );
+  }
 
   const Title = ({
     title,
@@ -57,19 +109,23 @@ function Home() {
         {/* Image Section */}
         <img src={Couch} alt="Couch" className="w-full lg:w-3/5" />
       </div>
-      <CarouselCard products={productsData.products} />
+      {productsData && <CarouselCard products={productsData.products} />}
+
       <Title
         title="Featured Products"
         href="/products"
         sideText="View All Products"
       />
       <div className="grid grid-cols-1 gap-6 px-4 md:grid-cols-2 md:px-0 lg:grid-cols-4">
-        {productsData.products.slice(0, 4).map((product: Product) => (
-          <ProductCard product={product} key={product.id} />
-        ))}
+        {productsData &&
+          productsData.products
+            .slice(0, 4)
+            .map((product: Product) => (
+              <ProductCard product={product} key={product.id} />
+            ))}
       </div>
       <Title title="Recent Blog" href="/blogs" sideText="View All Posts" />
-      <BlogCard posts={postsData.posts} />
+      {postsData && <BlogCard posts={postsData.posts} />}
     </div>
   );
 }

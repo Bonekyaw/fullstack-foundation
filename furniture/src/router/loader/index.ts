@@ -49,3 +49,7 @@ export const confirmLoader = async () => {
 
   return null;
 };
+
+// 1. Login success  -->  loader (fetching data)  -->  Home Screen
+// 2. Login success  -->  Home Screen  -->  useQuery (cache after fetch)
+// 3. Login success  -->  loader (cache after fetch) --> Home screen
