@@ -19,8 +19,9 @@ import ProductDetailPage from "@/pages/products/ProductDetail";
 import LoginPage from "@/pages/auth/Login";
 
 import {
+  blogInfiniteLoader,
   confirmLoader,
-  // homeLoader,
+  homeLoader,
   loginLoader,
   otpLoader,
 } from "@/router/loader";
@@ -46,7 +47,7 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
-        // loader: homeLoader
+        loader: homeLoader,
       },
       { path: "about", element: <AboutPage /> },
       {
@@ -66,6 +67,7 @@ export const router = createBrowserRouter([
                 <BlogPage />
               </Suspense>
             ),
+            loader: blogInfiniteLoader,
           },
           {
             path: ":postId",
