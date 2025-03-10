@@ -17,6 +17,7 @@ import {
 import {
   getProduct,
   getProductsByPagination,
+  getCategoryType,
 } from "../../../controllers/api/productController";
 
 const router = express.Router();
@@ -46,5 +47,7 @@ router.get("/posts/:id", auth, getPost);
 
 router.get("/products/:id", auth, getProduct);
 router.get("/products", auth, getProductsByPagination); // Cursor-based Pagination
+
+router.get("/filter-type", auth, getCategoryType);
 
 export default router;
