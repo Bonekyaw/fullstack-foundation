@@ -40,3 +40,27 @@ export const postInfiniteQuery = () => ({
   // getPreviousPageParam: (firstPage, pages) => firstPage.prevCursor ?? undefined,
   // maxPages: 7,
 });
+
+const fetchOnePost = async (id: number) => {
+  const post = await api.get(`users/posts/${id}`);
+  if (!post) {
+    throw new Response("", {
+      status: 404,
+      statusText: "Not Found",
+    });
+  }
+  return post.data;
+};
+
+export const onePostQuery = (id: number) => ({
+  queryKey: ["posts", "detail", id],
+  queryFn: () => fetchOnePost(id),
+});
+
+const fetchCategoryType = async () =>
+  api.get("users/filter-type").then((res) => res.data);
+
+export const categoryTypeQuery = () => ({
+  queryKey: ["category", "type"],
+  queryFn: fetchCategoryType,
+});

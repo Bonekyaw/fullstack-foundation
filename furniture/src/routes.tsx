@@ -24,6 +24,7 @@ import {
   homeLoader,
   loginLoader,
   otpLoader,
+  postLoader,
 } from "@/router/loader";
 import {
   confirmAction,
@@ -78,6 +79,7 @@ export const router = createBrowserRouter([
                 <BlogDetailPage />
               </Suspense>
             ),
+            loader: postLoader,
           },
         ],
       },
