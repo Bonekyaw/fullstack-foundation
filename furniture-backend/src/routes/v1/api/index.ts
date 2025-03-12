@@ -18,6 +18,7 @@ import {
   getProduct,
   getProductsByPagination,
   getCategoryType,
+  toggleFavourite,
 } from "../../../controllers/api/productController";
 
 const router = express.Router();
@@ -49,5 +50,6 @@ router.get("/products/:id", auth, getProduct);
 router.get("/products", auth, getProductsByPagination); // Cursor-based Pagination
 
 router.get("/filter-type", auth, getCategoryType);
+router.patch("/products/toggle-favourite", auth, toggleFavourite);
 
 export default router;

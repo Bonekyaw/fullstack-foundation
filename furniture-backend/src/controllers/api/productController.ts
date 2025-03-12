@@ -13,6 +13,11 @@ import {
   getProductWithRelations,
   getTypeList,
 } from "../../services/productService";
+import {
+  addProductToFavourite,
+  removeProductFromFavourite,
+} from "../../services/userService";
+import { cacheQueue } from "../../jobs/queues/cacheQueue";
 
 interface CustomRequest extends Request {
   userId?: number;
@@ -46,7 +51,7 @@ export const getProduct = [
 export const getProductsByPagination = [
   query("cursor", "Cursor must be Post ID.").isInt({ gt: 0 }).optional(),
   query("limit", "Limit number must be unsigned integer.")
-    .isInt({ gt: 4 })
+    .isInt({ gt: 3 })
     .optional(),
   async (req: CustomRequest, res: Response, next: NextFunction) => {
     const errors = validationResult(req).array({ onlyFirstError: true });
@@ -159,3 +164,44 @@ export const getCategoryType = async (
     types,
   });
 };
+
+export const toggleFavourite = [
+  body("productId", "Product ID must not be empty.").isInt({ gt: 0 }),
+  body("favourite", "Favourite must not be empty.").isBoolean(),
+  async (req: CustomRequest, res: Response, next: NextFunction) => {
+    const errors = validationResult(req).array({ onlyFirstError: true });
+    // If validation error occurs
+    if (errors.length > 0) {
+      return next(createError(errors[0].msg, 400, errorCode.invalid));
+    }
+
+    const userId = req.userId;
+    const user = await getUserById(userId!);
+    checkUserIfNotExist(user);
+
+    const { productId, favourite } = req.body;
+
+    if (favourite) {
+      await addProductToFavourite(user!.id, productId);
+    } else {
+      await removeProductFromFavourite(user!.id, productId);
+    }
+
+    await cacheQueue.add(
+      "invalidate-product-cache",
+      {
+        pattern: "products:*",
+      },
+      {
+        jobId: `invalidate-${Date.now()}`,
+        priority: 1,
+      }
+    );
+
+    res.status(200).json({
+      message: favourite
+        ? "Successfully added favourite"
+        : "Successfully removed favourite",
+    });
+  },
+];
