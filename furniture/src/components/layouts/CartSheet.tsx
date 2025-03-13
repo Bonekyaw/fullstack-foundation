@@ -32,7 +32,7 @@ export default function CartSheet() {
         >
           <Badge
             variant="destructive"
-            className="absolute -top-2 -right-2 size-6 justify-center rounded-full p-2.5"
+            className="absolute -right-2 -top-2 size-6 justify-center rounded-full p-2.5"
           >
             {itemCount}
           </Badge>
@@ -49,7 +49,7 @@ export default function CartSheet() {
             <ScrollArea className="my-4 h-[68vh] pb-8">
               <div className="flex-1">
                 {cartItems.map((cart) => (
-                  <CartItem cart={cart} />
+                  <CartItem cart={cart} key={cart.id} />
                 ))}
               </div>
             </ScrollArea>
@@ -82,8 +82,8 @@ export default function CartSheet() {
           </>
         ) : (
           <div className="flex h-full flex-col items-center justify-center space-y-1">
-            <Icons.cart className="text-muted-foreground mb-4 size-16" />
-            <div className="text-muted-foreground text-xl font-medium">
+            <Icons.cart className="mb-4 size-16 text-muted-foreground" />
+            <div className="text-xl font-medium text-muted-foreground">
               Your cart is empty
             </div>
           </div>

@@ -89,6 +89,7 @@ function ProductDetail() {
             <AddToFavourite
               productId={String(productDetail.product.id)}
               rating={Number(productDetail.product.rating)}
+              isFavourite={productDetail.product.users.length === 1}
             />
           </div>
           <AddToCartForm canBuy={productDetail.product.status === "ACTIVE"} />

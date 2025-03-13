@@ -30,6 +30,7 @@ import {
 } from "@/router/loader";
 import {
   confirmAction,
+  favouriteAction,
   loginAction,
   logoutAction,
   otpAction,
@@ -110,6 +111,7 @@ export const router = createBrowserRouter([
               </Suspense>
             ),
             loader: productLoader,
+            action: favouriteAction,
           },
         ],
       },
