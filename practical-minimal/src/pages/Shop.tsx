@@ -15,7 +15,7 @@ function Shop() {
       <div className="container mx-auto">
         <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
           {products.map((product) => (
-            <ProductCard {...product} />
+            <ProductCard {...product} key={product.id} />
           ))}
         </div>
       </div>
