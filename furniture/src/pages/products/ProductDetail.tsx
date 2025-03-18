@@ -15,8 +15,8 @@ import {
 import { Separator } from "@/components/ui/separator";
 import { formatPrice } from "@/lib/utils";
 import Rating from "@/components/products/Rating";
-// import AddToFavourite from "@/components/products/AddToFavourite";
-import AddToFavourite from "@/components/products/TanstackOptimistic";
+import AddToFavourite from "@/components/products/AddToFavourite";
+// import AddToFavourite from "@/components/products/TanstackOptimistic";
 import AddToCartForm from "@/components/products/AddToCartForm";
 import {
   Accordion,
