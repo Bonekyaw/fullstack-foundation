@@ -11,15 +11,19 @@ import {
 } from "@/components/ui/sheet";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { cartItems } from "@/data/carts";
+// import { cartItems } from "@/data/carts";
 import { Icons } from "@/components/icons";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import CartItem from "@/components/carts/CartItem";
 import { formatPrice } from "@/lib/utils";
+import { useCartStore } from "@/store/cartStore";
 
 export default function CartSheet() {
-  const itemCount = 4;
-  const amountTotal = 190;
+  // const itemCount = 4;
+  // const amountTotal = 190;
+  const itemCount = useCartStore((state) => state.getTotalItems());
+  const amountTotal = useCartStore((state) => state.getTotalPrice());
+  const { carts } = useCartStore();
 
   return (
     <Sheet>
@@ -30,25 +34,29 @@ export default function CartSheet() {
           className="relative"
           aria-label="Open cart"
         >
-          <Badge
-            variant="destructive"
-            className="absolute -right-2 -top-2 size-6 justify-center rounded-full p-2.5"
-          >
-            {itemCount}
-          </Badge>
+          {itemCount > 0 && (
+            <Badge
+              variant="destructive"
+              className="absolute -right-2 -top-2 size-6 justify-center rounded-full p-2.5"
+            >
+              {itemCount}
+            </Badge>
+          )}
           <Icons.cart className="size-4" aria-hidden="true" />
         </Button>
       </SheetTrigger>
       <SheetContent className="w-full md:max-w-lg">
         <SheetHeader>
-          <SheetTitle>Cart - {itemCount}</SheetTitle>
+          <SheetTitle>
+            {itemCount > 0 ? `Cart - ${itemCount}` : "Empty Cart"}
+          </SheetTitle>
         </SheetHeader>
         <Separator className="my-2" />
-        {cartItems.length > 0 ? (
+        {carts.length > 0 ? (
           <>
             <ScrollArea className="my-4 h-[68vh] pb-8">
               <div className="flex-1">
-                {cartItems.map((cart) => (
+                {carts.map((cart) => (
                   <CartItem cart={cart} key={cart.id} />
                 ))}
               </div>
