@@ -28,6 +28,7 @@ import {
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { oneProductQuery, productQuery } from "@/api/query";
 import type { Image, Product } from "@/types";
+import { useCartStore } from "@/store/cartStore";
 
 const imageUrl = import.meta.env.VITE_IMG_URL;
 
@@ -40,6 +41,18 @@ function ProductDetail() {
   const { productId } = useLoaderData();
   const { data: productsData } = useSuspenseQuery(productQuery("?limit=4"));
   const { data: productDetail } = useSuspenseQuery(oneProductQuery(productId));
+
+  const { addItem } = useCartStore();
+
+  const handleCart = (quantity: number) => {
+    addItem({
+      id: productDetail.product.id,
+      name: productDetail.product.name,
+      price: productDetail.product.price,
+      image: productDetail.product.images[0].path,
+      quantity,
+    });
+  };
 
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true }),
@@ -93,7 +106,11 @@ function ProductDetail() {
               isFavourite={productDetail.product.users.length === 1}
             />
           </div>
-          <AddToCartForm canBuy={productDetail.product.status === "ACTIVE"} />
+          <AddToCartForm
+            canBuy={productDetail.product.status === "ACTIVE"}
+            onHandleCart={handleCart}
+            idInCart={productDetail.product.id}
+          />
           <Separator className="my-5" />
           <Accordion
             type="single"
