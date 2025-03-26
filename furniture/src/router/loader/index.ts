@@ -66,6 +66,26 @@ export const confirmLoader = async () => {
   return null;
 };
 
+export const verifyLoader = async () => {
+  const authStore = useAuthStore.getState();
+
+  if (authStore.status !== Status.verify) {
+    return redirect("/reset");
+  }
+
+  return null;
+};
+
+export const newPasswordLoader = async () => {
+  const authStore = useAuthStore.getState();
+
+  if (authStore.status !== Status.reset) {
+    return redirect("/reset");
+  }
+
+  return null;
+};
+
 // 1. Login success  -->  loader (fetching data)  -->  Home Screen
 // 2. Login success  -->  Home Screen  -->  useQuery (cache after fetch)
 // 3. Login success  -->  loader (cache after fetch) --> Home screen

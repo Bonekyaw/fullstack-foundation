@@ -23,23 +23,31 @@ import {
   confirmLoader,
   homeLoader,
   loginLoader,
+  newPasswordLoader,
   otpLoader,
   postLoader,
   productInfiniteLoader,
   productLoader,
+  verifyLoader,
 } from "@/router/loader";
 import {
   confirmAction,
   favouriteAction,
   loginAction,
   logoutAction,
+  newPasswordAction,
   otpAction,
   registerAction,
+  resetAction,
+  verifyAction,
 } from "@/router/action";
 import AuthRootLayout from "@/pages/auth/AuthRootLayout";
 import SignUpPage from "@/pages/auth/SignUp";
 import OtpPage from "@/pages/auth/Otp";
 import ConfirmPasswordPage from "@/pages/auth/ConfirmPassword";
+import ResetPasswordPage from "@/pages/auth/ResetPassword";
+import VerifyOtpPage from "@/pages/auth/VerifyOtp";
+import NewPasswordPage from "@/pages/auth/NewPassword";
 // const SuspenseFallback = () => <div className="text-center">Loading...</div>;
 
 export const router = createBrowserRouter([
@@ -151,5 +159,28 @@ export const router = createBrowserRouter([
     path: "/logout",
     action: logoutAction,
     loader: () => redirect("/"),
+  },
+  {
+    path: "/reset",
+    element: <AuthRootLayout />,
+    children: [
+      {
+        index: true,
+        element: <ResetPasswordPage />,
+        action: resetAction,
+      },
+      {
+        path: "verify",
+        element: <VerifyOtpPage />,
+        loader: verifyLoader,
+        action: verifyAction,
+      },
+      {
+        path: "new-password",
+        element: <NewPasswordPage />,
+        loader: newPasswordLoader,
+        action: newPasswordAction,
+      },
+    ],
   },
 ]);
