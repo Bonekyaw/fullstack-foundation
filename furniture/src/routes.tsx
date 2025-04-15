@@ -53,15 +53,19 @@ import NewPasswordPage from "@/pages/auth/NewPassword";
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <RootLayout />,
-    errorElement: <ErrorPage />,
+    element: <RootLayout />, // Component: RootLayout
+    errorElement: <ErrorPage />, // errorElement: ErrorPage
     children: [
       {
         index: true,
-        element: <HomePage />,
+        element: <HomePage />, // Component: HomePage
+        errorElement: <ErrorPage />, // errorElement: ErrorPage
         loader: homeLoader,
       },
-      { path: "about", element: <AboutPage /> },
+      {
+        path: "about",
+        element: <AboutPage />, // Component: AboutPage
+      },
       {
         path: "blogs",
         element: (
@@ -69,6 +73,12 @@ export const router = createBrowserRouter([
             <BlogRootLayout />
           </Suspense>
         ),
+        // lazy: async () => {
+        //   const [BlogRootLayout] = await Promise.all([
+        //     import("@/pages/blogs/BlogRootLayout"),
+        //   ]);
+        //   return { BlogRootLayout };
+        // },
         children: [
           {
             index: true,
@@ -79,7 +89,15 @@ export const router = createBrowserRouter([
                 <BlogPage />
               </Suspense>
             ),
+            // Component: BlogPage
             loader: blogInfiniteLoader,
+            // lazy: async () => {
+            //   const [BlogRootLayout, blogInfiniteLoader] = await Promise.all([
+            //     import("@/pages/blogs/BlogRootLayout"),
+            //     import("@/router/loader"),
+            //   ]);
+            //   return { BlogRootLayout, blogInfiniteLoader };
+            // },
           },
           {
             path: ":postId",
@@ -90,13 +108,14 @@ export const router = createBrowserRouter([
                 <BlogDetailPage />
               </Suspense>
             ),
+            // Component: BlogDetailPage
             loader: postLoader,
           },
         ],
       },
       {
         path: "products",
-        element: <ProductRootLayout />,
+        element: <ProductRootLayout />, // Component: ProductRootLayout
         children: [
           {
             index: true,
@@ -107,6 +126,7 @@ export const router = createBrowserRouter([
                 <ProductPage />
               </Suspense>
             ),
+            // Component: ProductPage
             loader: productInfiniteLoader,
           },
           {
@@ -118,6 +138,7 @@ export const router = createBrowserRouter([
                 <ProductDetailPage />
               </Suspense>
             ),
+            // Component: ProductDetailPage
             loader: productLoader,
             action: favouriteAction,
           },
@@ -127,29 +148,29 @@ export const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <LoginPage />,
+    element: <LoginPage />, // Component: LoginPage
     loader: loginLoader,
     action: loginAction,
   },
   {
     path: "/register",
-    element: <AuthRootLayout />,
+    element: <AuthRootLayout />, // Component: AuthRootLayout
     children: [
       {
         index: true,
-        element: <SignUpPage />,
+        element: <SignUpPage />, // Component: SignUpPage
         loader: loginLoader,
         action: registerAction,
       },
       {
         path: "otp",
-        element: <OtpPage />,
+        element: <OtpPage />, // Component: OtpPage
         loader: otpLoader,
         action: otpAction,
       },
       {
         path: "confirm-password",
-        element: <ConfirmPasswordPage />,
+        element: <ConfirmPasswordPage />, // Component: ConfirmPasswordPage
         loader: confirmLoader,
         action: confirmAction,
       },
@@ -162,22 +183,22 @@ export const router = createBrowserRouter([
   },
   {
     path: "/reset",
-    element: <AuthRootLayout />,
+    element: <AuthRootLayout />, // Component: AuthRootLayout
     children: [
       {
         index: true,
-        element: <ResetPasswordPage />,
+        element: <ResetPasswordPage />, // Component: ResetPasswordPage
         action: resetAction,
       },
       {
         path: "verify",
-        element: <VerifyOtpPage />,
+        element: <VerifyOtpPage />, // Component: VerifyOtpPage
         loader: verifyLoader,
         action: verifyAction,
       },
       {
         path: "new-password",
-        element: <NewPasswordPage />,
+        element: <NewPasswordPage />, // Component: NewPasswordPage
         loader: newPasswordLoader,
         action: newPasswordAction,
       },
