@@ -1,0 +1,47 @@
+*** Apollo server setup example ***
+
+npm init --yes && npm pkg set type="module"
+npm install @apollo/server graphql graphql-tag
+npm install --save-dev typescript @types/node ts-node ts-node-dev tsx dotenv nodemon
+npx tsc --init
+
+{
+  "compilerOptions": {
+    "sourceMap": true,
+    "rootDir": "src",
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "outDir": "./dist",
+    "strict": true,
+    "lib": ["esnext"],
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitAny": true,
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"]
+}
+
+mkdir src
+touch src/index.ts
+
+
+npm install prisma --save-dev
+npx prisma init --datasource-provider sqlite --output ../generated/prisma
+npx prisma migrate dev --name init
+npm install @prisma/client
+npx tsx script.ts
+npx prisma studio
+
+npm install -D concurrently @graphql-codegen/cli @graphql-codegen/typescript @graphql-codegen/typescript-resolvers
+npm run generate
+npm install @parcel/watcher
+
+*** Apollo client setup example ***
+
+http://localhost:5173/
+
+npm create vite@latest apolloclient -- --template react-ts
+npm install graphql @apollo/client
+npm install -D @graphql-codegen/cli @graphql-codegen/client-preset @graphql-codegen/typescript @graphql-codegen/typescript-operations
