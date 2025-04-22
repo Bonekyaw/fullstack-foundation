@@ -4,7 +4,9 @@
   "main": "dist/index.js",
   "scripts": {
     "compile": "tsc",
+    "dev": "concurrently \"NODE_OPTIONS='--import=tsx --experimental-specifier-resolution=node' ts-node-dev --respawn ./src/index.ts\" \"npm run generate\"",
     "start": "npm run compile && node dist/index.js",
+    "generate": "graphql-codegen --watch \"src/graphql/schema.graphql\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -14,13 +16,20 @@
   "type": "module",
   "dependencies": {
     "@apollo/server": "^4.12.0",
+    "@parcel/watcher": "^2.5.1",
+    "@prisma/client": "^6.6.0",
     "graphql": "^16.10.0",
     "graphql-tag": "^2.12.6"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "^5.0.5",
+    "@graphql-codegen/typescript": "^4.1.6",
+    "@graphql-codegen/typescript-resolvers": "^4.5.0",
     "@types/node": "^22.14.1",
+    "concurrently": "^9.1.2",
     "dotenv": "^16.5.0",
     "nodemon": "^3.1.9",
+    "prisma": "^6.6.0",
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "tsx": "^4.19.3",

@@ -26,6 +26,12 @@ npx tsc --init
 mkdir src
 touch src/index.ts
 
+In package.json,
+    "compile": "tsc",
+    "dev": "concurrently \"NODE_OPTIONS='--import=tsx --experimental-specifier-resolution=node' ts-node-dev --respawn ./src/index.ts\" \"npm run generate\"",
+    "start": "npm run compile && node dist/index.js",
+    "generate": "graphql-codegen --watch \"src/graphql/schema.graphql\"",
+
 
 npm install prisma --save-dev
 npx prisma init --datasource-provider sqlite --output ../generated/prisma

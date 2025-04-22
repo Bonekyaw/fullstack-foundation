@@ -3,7 +3,7 @@ fullstack.code-workspace
 node_modules/
 dist/
 .idea/
-
+generated/prisma/
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
