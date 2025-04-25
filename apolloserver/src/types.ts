@@ -68,7 +68,7 @@ export type Post = {
 
 export type PostInput = {
   /** The Post's author ID */
-  author: Scalars['ID']['input'];
+  authorId: Scalars['ID']['input'];
   /** The Post's content */
   content?: InputMaybe<Scalars['String']['input']>;
   /** The Post's publication status */
