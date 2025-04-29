@@ -15,9 +15,15 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 type Documents = {
     "\n  query GetAllPostsQuery {\n    posts {\n      id\n      title\n      content\n      published\n      author {\n        id\n        name\n        email\n      }\n    }\n  }\n  ": typeof types.GetAllPostsQueryDocument,
+    "\n    mutation DeletePost($id: ID!) {\n        deletePost(id: $id)\n    }\n": typeof types.DeletePostDocument,
+    "\n    mutation CreatePost($input: PostInput) {\n        createPost(input: $input) {\n            code\n            success\n            message\n            post {\n                id\n                title\n                content\n                published\n                author {\n                    name\n                }\n            }\n        }\n    }\n    ": typeof types.CreatePostDocument,
+    "\n    query Post($id: ID!) {\n        post(id: $id) {\n            id\n            title\n            content\n            published\n            author {\n                name\n            }\n        }\n    }\n": typeof types.PostDocument,
 };
 const documents: Documents = {
     "\n  query GetAllPostsQuery {\n    posts {\n      id\n      title\n      content\n      published\n      author {\n        id\n        name\n        email\n      }\n    }\n  }\n  ": types.GetAllPostsQueryDocument,
+    "\n    mutation DeletePost($id: ID!) {\n        deletePost(id: $id)\n    }\n": types.DeletePostDocument,
+    "\n    mutation CreatePost($input: PostInput) {\n        createPost(input: $input) {\n            code\n            success\n            message\n            post {\n                id\n                title\n                content\n                published\n                author {\n                    name\n                }\n            }\n        }\n    }\n    ": types.CreatePostDocument,
+    "\n    query Post($id: ID!) {\n        post(id: $id) {\n            id\n            title\n            content\n            published\n            author {\n                name\n            }\n        }\n    }\n": types.PostDocument,
 };
 
 /**
@@ -38,6 +44,18 @@ export function gql(source: string): unknown;
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query GetAllPostsQuery {\n    posts {\n      id\n      title\n      content\n      published\n      author {\n        id\n        name\n        email\n      }\n    }\n  }\n  "): (typeof documents)["\n  query GetAllPostsQuery {\n    posts {\n      id\n      title\n      content\n      published\n      author {\n        id\n        name\n        email\n      }\n    }\n  }\n  "];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n    mutation DeletePost($id: ID!) {\n        deletePost(id: $id)\n    }\n"): (typeof documents)["\n    mutation DeletePost($id: ID!) {\n        deletePost(id: $id)\n    }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n    mutation CreatePost($input: PostInput) {\n        createPost(input: $input) {\n            code\n            success\n            message\n            post {\n                id\n                title\n                content\n                published\n                author {\n                    name\n                }\n            }\n        }\n    }\n    "): (typeof documents)["\n    mutation CreatePost($input: PostInput) {\n        createPost(input: $input) {\n            code\n            success\n            message\n            post {\n                id\n                title\n                content\n                published\n                author {\n                    name\n                }\n            }\n        }\n    }\n    "];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n    query Post($id: ID!) {\n        post(id: $id) {\n            id\n            title\n            content\n            published\n            author {\n                name\n            }\n        }\n    }\n"): (typeof documents)["\n    query Post($id: ID!) {\n        post(id: $id) {\n            id\n            title\n            content\n            published\n            author {\n                name\n            }\n        }\n    }\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};
