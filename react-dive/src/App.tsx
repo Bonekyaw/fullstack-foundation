@@ -1,24 +1,33 @@
-import { useQuery } from "./hooks/useQuery";
+import { useLanguage } from "./providers/LanguageContext";
 
 import "./App.css";
 
-type Response = {
-  data: {
-    id: number;
-    email: string;
-  };
+const translations = {
+  en: "Hello!",
+  es: "Hola!",
+  fr: "Bonjour!",
 };
 
 function App() {
-  const { data, isLoading, error } = useQuery<Response>("users/2");
-
-  if (isLoading) return <p>loading...</p>;
-  if (error) return <p>Error: {error}</p>;
+  const { language, changelanguage } = useLanguage() as {
+    language: keyof typeof translations;
+    changelanguage: (lang: string) => void;
+  };
 
   return (
     <>
-      <h3>Custom Hook</h3>
-      <p>User Email: {data?.data.email}</p>
+      <h3>React Context API</h3>
+      <label htmlFor="language-select">Choose a language: </label>
+      <select
+        id="language-select"
+        value={language}
+        onChange={(e) => changelanguage(e.target.value)}
+      >
+        <option value="en">English</option>
+        <option value="es">Spanish</option>
+        <option value="fr">French</option>
+      </select>
+      <h1>{translations[language]}</h1>
     </>
   );
 }
