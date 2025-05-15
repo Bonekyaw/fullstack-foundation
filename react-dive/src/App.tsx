@@ -1,33 +1,55 @@
-import { useLanguage } from "./providers/LanguageContext";
+import { useState, useEffect } from "react";
+import { Link, useSearchParams } from "react-router";
 
 import "./App.css";
 
-const translations = {
-  en: "Hello!",
-  es: "Hola!",
-  fr: "Bonjour!",
-};
+const users = [
+  { id: 1, name: "David Aung" },
+  { id: 1, name: "Smith Aung" },
+  { id: 1, name: "Aung Aung" },
+  { id: 1, name: "Phone Nyo" },
+  { id: 1, name: "Mi Nay" },
+  { id: 1, name: "Mi Khant" },
+];
 
 function App() {
-  const { language, changelanguage } = useLanguage() as {
-    language: keyof typeof translations;
-    changelanguage: (lang: string) => void;
-  };
+  const [searchParams, setSearchParams] = useSearchParams();
+  const searchQuery = searchParams.get("search") || ""; // abc.com/users/?search=aung
+  const [inputValue, setInputValue] = useState(searchQuery);
+
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      if (inputValue) {
+        searchParams.set("search", inputValue);
+      } else {
+        searchParams.delete("search");
+      }
+      setSearchParams(searchParams);
+    }, 500);
+
+    return () => clearTimeout(timeoutId);
+  }, [inputValue, searchParams, setSearchParams]);
+
+  const filteredUsers = users.filter((user) =>
+    user.name.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   return (
     <>
-      <h3>React Context API</h3>
-      <label htmlFor="language-select">Choose a language: </label>
-      <select
-        id="language-select"
-        value={language}
-        onChange={(e) => changelanguage(e.target.value)}
-      >
-        <option value="en">English</option>
-        <option value="es">Spanish</option>
-        <option value="fr">French</option>
-      </select>
-      <h1>{translations[language]}</h1>
+      <Link to="/help">Go to other page</Link>
+      <h3>Search Filter & Debouncing </h3>
+      <input
+        type="text"
+        placeholder="Search users by name ..."
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+      />
+      {/* <button type="submit">Search</button> */}
+      <ul>
+        {filteredUsers.map((user) => (
+          <li key={user.id}>{user.name}</li>
+        ))}
+      </ul>
     </>
   );
 }
