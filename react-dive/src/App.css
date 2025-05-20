@@ -42,3 +42,22 @@
 .read-the-docs {
   color: #888;
 }
+
+.row {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2rem;
+}
+
+input {
+  width: 300px;
+  padding: 0.5em;
+  border-radius: 0.5em;
+  border: 1px solid #ccc;
+}
+
+input:focus {
+  outline: none;
+  border-color: #61dafb;
+}
