@@ -1,0 +1,49 @@
+{
+  "posts": [
+    {
+      "id": "1a",
+      "title": "First Post",
+      "votes": 0
+    },
+    {
+      "id": "2a",
+      "title": "Second Post",
+      "votes": 0
+    },
+    {
+      "id": "c4f9",
+      "title": "Hello React",
+      "votes": 0
+    },
+    {
+      "id": "3c0d",
+      "title": "Hello Node",
+      "votes": 0
+    },
+    {
+      "id": "8c19",
+      "title": "Hello JS",
+      "votes": 0
+    },
+    {
+      "id": "7e1c",
+      "title": "hello Nest js",
+      "votes": 0
+    },
+    {
+      "id": "aac9",
+      "title": "Hello Developer",
+      "votes": 0
+    },
+    {
+      "id": "ee65",
+      "title": "Hello Next js",
+      "votes": 1
+    },
+    {
+      "id": "09f0",
+      "title": "Hello Security",
+      "votes": 5
+    }
+  ]
+}
