@@ -1,0 +1,19 @@
+1. npm init -y
+2. npm i express
+3. npm i typescript --save-dev
+4. npm i @types/express --save-dev
+5. npx tsc --init
+6. npm i nodemon ts-node --save-dev
+7. npm i jest supertest ts-jest @types/jest @types/supertest --save-dev
+8. npx ts-jest config:init
+
+
+In tsconfig.json,
+    "rootDir": "./src",
+    "outDir": "./dist",
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+
+- npx tsc --build
+- node ./dist/index.js
