@@ -6,7 +6,10 @@
     "build": "tsc --build",
     "start": "node ./dist/index.js",
     "dev": "nodemon ./src/index.ts",
-    "test": "jest"
+    "test": "jest",
+    "test:unit": "jest --testPathPattern=__test__/unit",
+    "test:integration": "jest --testPathPattern=__test__/integration",
+    "test:e2e": "jest --testPathPattern=__test__/e2e"
   },
   "keywords": [],
   "author": "",
