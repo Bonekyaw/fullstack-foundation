@@ -1,6 +1,9 @@
+import prisma from "../lib/prisma";
+
 export const UserService = {
   async create(user: { name: string; email: string }) {
-    // Simulating DB Logic
-    return { id: "123", ...user };
+    return await prisma.user.create({
+      data: user,
+    });
   },
 };
