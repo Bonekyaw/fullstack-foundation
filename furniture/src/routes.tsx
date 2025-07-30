@@ -54,12 +54,11 @@ export const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />, // Component: RootLayout
-    errorElement: <ErrorPage />, // errorElement: ErrorPage
+    errorElement: <ErrorPage />, // ErrorBoundary: ErrorPage
     children: [
       {
         index: true,
         element: <HomePage />, // Component: HomePage
-        errorElement: <ErrorPage />, // errorElement: ErrorPage
         loader: homeLoader,
       },
       {
