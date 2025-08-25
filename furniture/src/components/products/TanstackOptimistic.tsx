@@ -1,12 +1,20 @@
 import { useIsFetching, useMutation } from "@tanstack/react-query";
 
-import { Button, type ButtonProps } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons";
 import api from "@/api";
 import { queryClient } from "@/api/query";
 
-interface FavouriteProp extends ButtonProps {
+// Shadcn version 2 does not export ButtonProps type
+
+// interface FavouriteProp extends ButtonProps {
+//   productId: string;
+//   rating: number;
+//   isFavourite: boolean;
+// }
+
+interface FavouriteProp extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   productId: string;
   rating: number;
   isFavourite: boolean;
