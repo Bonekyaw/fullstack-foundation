@@ -1,10 +1,24 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
-interface CounterState {
-  value: number;
+interface User {
+  id: number;
+  name: string;
+  age: number;
 }
 
-const initialState: CounterState = { value: 0 };
+interface CounterState {
+  value: number;
+  users: User[];
+}
+
+const initialState: CounterState = {
+  value: 0,
+  users: [
+    { id: 1, name: "John", age: 30 },
+    { id: 2, name: "Jane", age: 16 },
+    { id: 3, name: "Doe", age: 50 },
+  ],
+};
 
 const counterSlice = createSlice({
   name: "counter",
@@ -24,7 +38,15 @@ const counterSlice = createSlice({
       state.value += action.payload;
     },
   },
+  selectors: {
+    countUsers: (state) => {
+      const newUsers = state.users.filter((user) => user.age >= 18);
+      return newUsers.length;
+    },
+  },
 });
 
 export const { increment, decrement, incrementByAmount } = counterSlice.actions;
+export const { countUsers } = counterSlice.selectors;
+// export const counter = (state: RootState) => state.counter.value;
 export default counterSlice.reducer;
