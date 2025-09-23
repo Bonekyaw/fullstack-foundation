@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { useAppSelector, useAppDispatch } from "@/hooks/useRedux";
-import { fetchPosts, addPost } from "@/store/postsSlice";
+import {
+  fetchPosts,
+  addPost,
+  updatePost,
+  deletePost,
+} from "@/store/postsSlice";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -19,13 +24,13 @@ function App() {
     if (status === "idle") {
       dispatch(fetchPosts());
     }
-  }, [dispatch]);
+  }, [dispatch, status]);
 
   const handleAddPost = async () => {
     if (!newPost.trim()) return;
     setLoading(true);
     try {
-      await dispatch(addPost({ title: newPost }));
+      await dispatch(addPost({ title: newPost })).unwrap();
       setNewPost("");
     } catch (error) {
       alert("Failed to add new post: " + error);
@@ -34,9 +39,24 @@ function App() {
     }
   };
 
-  const handleUpdatePost = async (id: string) => {};
+  const handleUpdatePost = async (id: string) => {
+    if (!editText.trim()) return;
+    try {
+      await dispatch(updatePost({ id, title: editText })).unwrap();
+      setEditId(null);
+      setEditText("");
+    } catch (error) {
+      alert("Failed to update post: " + error);
+    }
+  };
 
-  const handleDeletePost = async (id: string) => {};
+  const handleDeletePost = async (id: string) => {
+    try {
+      await dispatch(deletePost(id)).unwrap();
+    } catch (error) {
+      alert("Failed to delete post: " + error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10 px-4">
