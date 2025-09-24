@@ -1,6 +1,19 @@
 {
   "posts": [
-    { "id": "abc", "title": "First Post" },
-    { "id": "def", "title": "Second Post" }
+    {
+      "id": "abc",
+      "title": "First Post",
+      "userId": "user1"
+    },
+    {
+      "id": "def",
+      "title": "Second Post!",
+      "userId": "user2"
+    },
+    {
+      "id": "b248",
+      "title": "3rd Post",
+      "userId": "user2"
+    }
   ]
 }
