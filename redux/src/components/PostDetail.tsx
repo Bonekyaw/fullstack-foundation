@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, memo } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -75,4 +75,4 @@ function PostDetail({ post }: { post: Post }) {
   );
 }
 
-export default PostDetail;
+export default memo(PostDetail);

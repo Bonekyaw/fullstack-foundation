@@ -1,11 +1,15 @@
 import {
   createSlice,
+  createEntityAdapter,
+  type EntityState,
   type PayloadAction,
   createSelector,
 } from "@reduxjs/toolkit";
 import axios from "axios";
 import type { RootState } from ".";
 import { createAppAsyncThunk } from "./withTypes";
+
+// Hey Dev, this file has not been finished yet. Please check back later.
 
 const POST_API_URL = "http://localhost:4000/posts";
 
@@ -15,17 +19,24 @@ export interface Post {
   userId: string;
 }
 
-interface PostsState {
-  items: Post[];
+interface PostsState extends EntityState<Post, string> {
+  // items: Post[];
   status: "idle" | "pending" | "succeeded" | "failed";
   error: string | null;
 }
 
-const initialState: PostsState = {
-  items: [],
+// const postsAdapter = createEntityAdapter<Post>({
+//   // Sort by date descending
+//   sortComparer: (a, b) => b.date.localeCompare(a.date),
+// });
+
+const postsAdapter = createEntityAdapter<Post>();
+
+const initialState: PostsState = postsAdapter.getInitialState({
+  // items: [],
   status: "idle",
   error: null,
-};
+});
 
 // dispatch(fetchPosts()) // type: "posts/fetchPosts"
 
@@ -88,7 +99,8 @@ const postsSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchPosts.fulfilled, (state, action) => {
-        state.items.push(...action.payload);
+        // state.items.push(...action.payload);
+        postsAdapter.setAll(state, action.payload);
         state.status = "succeeded";
       })
       .addCase(fetchPosts.rejected, (state, action) => {
@@ -134,3 +146,22 @@ export const selectPostsByUser = createSelector(
   [selectAllPosts, (state: RootState, userId: string) => userId],
   (posts, userId) => posts.filter((post) => post.userId === userId)
 );
+
+// Before normalization
+// [
+//   {id: "p1", title, userId},
+//   {id: "p2", title, userId},
+//   {id: "p3", title, userId},
+// ]
+
+// After normalization
+// {
+//   posts: {
+//     ids: ["p1", "p2", "p3"],
+//     entities: {
+//       "p1": {id: "p1", title, userId},
+//       "p2": {id: "p2", title, userId},
+//       "p3": {id: "p3", title, userId},
+//     }
+//   }
+// }
