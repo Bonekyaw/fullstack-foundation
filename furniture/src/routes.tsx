@@ -72,11 +72,9 @@ export const router = createBrowserRouter([
             <BlogRootLayout />
           </Suspense>
         ),
-        // lazy: async () => {
-        //   const [BlogRootLayout] = await Promise.all([
-        //     import("@/pages/blogs/BlogRootLayout"),
-        //   ]);
-        //   return { BlogRootLayout };
+        // lazy: {
+        //   Component: async () =>
+        //     (await import("@/pages/blogs/BlogRootLayout")).default,
         // },
         children: [
           {
@@ -90,12 +88,10 @@ export const router = createBrowserRouter([
             ),
             // Component: BlogPage
             loader: blogInfiniteLoader,
-            // lazy: async () => {
-            //   const [BlogRootLayout, blogInfiniteLoader] = await Promise.all([
-            //     import("@/pages/blogs/BlogRootLayout"),
-            //     import("@/router/loader"),
-            //   ]);
-            //   return { BlogRootLayout, blogInfiniteLoader };
+            // lazy: {
+            //   loader: async () => (await import("@/router/loader")).blogInfiniteLoader,
+            //   Component: async () =>
+            //     (await import("@/pages/blogs/Blog")).default,
             // },
           },
           {
