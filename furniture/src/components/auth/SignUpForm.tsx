@@ -1,4 +1,9 @@
-import { Link, useActionData, useNavigation, useSubmit } from "react-router";
+import {
+  Link,
+  useActionData,
+  // useNavigation,
+  useSubmit,
+} from "react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -30,13 +35,13 @@ export function SignUpForm({
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   const submit = useSubmit();
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const actionData = useActionData() as {
     error?: string;
     message?: string;
   };
 
-  const isSubmitting = navigation.state === "submitting";
+  // const isSubmitting = navigation.state === "submitting";
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -101,8 +106,12 @@ export function SignUpForm({
                   <p className="text-xs text-red-400">{actionData?.message}</p>
                 )}
                 <div className="grid gap-4">
-                  <Button type="submit" className="mt-2 w-full">
-                    {isSubmitting ? "Submitting..." : "Sign Up"}
+                  <Button
+                    type="submit"
+                    className="mt-2 w-full"
+                    disabled={form.formState.isSubmitting}
+                  >
+                    {form.formState.isSubmitting ? "Submitting..." : "Sign Up"}
                   </Button>
                 </div>
               </form>

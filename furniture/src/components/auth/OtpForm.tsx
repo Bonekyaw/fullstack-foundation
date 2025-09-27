@@ -1,7 +1,12 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-import { Link, useActionData, useNavigation, useSubmit } from "react-router";
+import {
+  Link,
+  useActionData,
+  // useNavigation,
+  useSubmit,
+} from "react-router";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 
 import { Icons } from "@/components/icons";
@@ -34,13 +39,13 @@ export function InputOTPForm({
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   const submit = useSubmit();
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const actionData = useActionData() as {
     error?: string;
     message?: string;
   };
 
-  const isSubmitting = navigation.state === "submitting";
+  // const isSubmitting = navigation.state === "submitting";
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -112,8 +117,12 @@ export function InputOTPForm({
                 <p className="text-xs text-red-400">{actionData?.message}</p>
               )}
               <div className="grid gap-4">
-                <Button type="submit" className="mt-2 w-full">
-                  {isSubmitting ? "Submitting..." : "Verify"}
+                <Button
+                  type="submit"
+                  className="mt-2 w-full"
+                  disabled={form.formState.isSubmitting}
+                >
+                  {form.formState.isSubmitting ? "Submitting..." : "Verify"}
                 </Button>
               </div>
             </form>

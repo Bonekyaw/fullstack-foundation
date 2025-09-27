@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { Link, useActionData, useNavigation, useSubmit } from "react-router";
+import {
+  Link,
+  useActionData,
+  // useNavigation,
+  useSubmit,
+} from "react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -36,7 +41,7 @@ export function ConfirmPasswordForm({
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   const submit = useSubmit();
-  const navigation = useNavigation();
+  // const navigation = useNavigation();
   const actionData = useActionData() as {
     error?: string;
     message?: string;
@@ -44,7 +49,7 @@ export function ConfirmPasswordForm({
 
   const [clientError, setClientError] = useState<string | null>(null);
 
-  const isSubmitting = navigation.state === "submitting";
+  // const isSubmitting = navigation.state === "submitting";
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -143,8 +148,12 @@ export function ConfirmPasswordForm({
                   <p className="text-xs text-red-400">{clientError}</p>
                 )}
                 <div className="grid gap-4">
-                  <Button type="submit" className="mt-4 w-full">
-                    {isSubmitting ? "Submitting..." : "Confirm"}
+                  <Button
+                    type="submit"
+                    className="mt-4 w-full"
+                    disabled={form.formState.isSubmitting}
+                  >
+                    {form.formState.isSubmitting ? "Submitting..." : "Confirm"}
                   </Button>
                 </div>
               </form>
