@@ -108,25 +108,28 @@ const postsSlice = createSlice({
         state.error = action.error.message || "Failed to fetch posts";
       })
       .addCase(addPost.fulfilled, (state, action) => {
-        state.items.push(action.payload);
+        // state.items.push(action.payload);
+        postsAdapter.addOne(state, action.payload);
       })
       .addCase(addPost.rejected, (state, action) => {
         state.error = action.error.message || "Failed to add new post";
       })
       .addCase(updatePost.fulfilled, (state, action: PayloadAction<Post>) => {
-        // const { id, title } = action.payload;
+        const { id, title } = action.payload;
+        postsAdapter.updateOne(state, { id, changes: { title } });
         // const existingPost = state.items.find((post) => post.id === id);
         // if (existingPost) {
         //   existingPost.title = title;
         // }
 
-        const index = state.items.findIndex(
-          (post) => post.id === action.payload.id
-        );
-        if (index !== -1) state.items[index] = action.payload;
+        // const index = state.items.findIndex(
+        //   (post) => post.id === action.payload.id
+        // );
+        // if (index !== -1) state.items[index] = action.payload;
       })
       .addCase(deletePost.fulfilled, (state, action) => {
-        state.items = state.items.filter((post) => post.id !== action.payload);
+        // state.items = state.items.filter((post) => post.id !== action.payload);
+        postsAdapter.removeOne(state, action.payload);
       });
   },
 });
@@ -134,7 +137,14 @@ const postsSlice = createSlice({
 export default postsSlice.reducer;
 
 export const selectPostsStatus = (state: RootState) => state.posts.status;
-export const selectAllPosts = (state: RootState) => state.posts.items;
+export const selectPostsError = (state: RootState) => state.posts.error;
+// export const selectAllPosts = (state: RootState) => state.posts.items;
+
+export const {
+  selectAll: selectAllPosts,
+  selectById: selectPostById,
+  selectIds: selectPostIds,
+} = postsAdapter.getSelectors((state: RootState) => state.posts);
 
 // Wrong way
 // export const selectPostsByUser = (state: RootState, userId: string) => {

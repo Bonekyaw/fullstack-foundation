@@ -1,14 +1,15 @@
-import { useState, memo } from "react";
+import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import type { Post } from "@/store/postsSlice";
-import { useAppDispatch } from "@/hooks/useRedux";
-import { updatePost, deletePost } from "@/store/postsSlice";
+// import type { Post } from "@/store/postsSlice";
+import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
+import { updatePost, deletePost, selectPostById } from "@/store/postsSlice";
 
-function PostDetail({ post }: { post: Post }) {
+function PostDetail({ postId }: { postId: string }) {
   const dispatch = useAppDispatch();
+  const post = useAppSelector((state) => selectPostById(state, postId));
 
   const [editId, setEditId] = useState<string | null>(null);
   const [editText, setEditText] = useState("");
@@ -75,4 +76,4 @@ function PostDetail({ post }: { post: Post }) {
   );
 }
 
-export default memo(PostDetail);
+export default PostDetail;

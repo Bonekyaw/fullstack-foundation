@@ -6,7 +6,10 @@ import {
   fetchPosts,
   addPost,
   // selectAllPosts,
-  selectPostsByUser,
+  // selectPostsByUser,
+  selectPostIds,
+  selectPostsStatus,
+  selectPostsError,
 } from "@/store/postsSlice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,10 +17,14 @@ import PostDetail from "./PostDetail";
 
 function PostsList() {
   const dispatch = useAppDispatch();
-  const { status, error } = useAppSelector((state) => state.posts);
-  const posts = useAppSelector((state) => selectPostsByUser(state, "user2"));
+  // const { status, error } = useAppSelector((state) => state.posts);
+  // const posts = useAppSelector((state) => selectPostsByUser(state, "user2"));
   //   const posts = useAppSelector(selectAllPosts);
   //   const userPosts = posts.filter((post) => post.userId === "user2");
+
+  const postIds = useAppSelector(selectPostIds);
+  const status = useAppSelector(selectPostsStatus);
+  const error = useAppSelector(selectPostsError);
 
   const [newPost, setNewPost] = useState("");
   const [loading, setLoading] = useState(false);
@@ -66,8 +73,8 @@ function PostsList() {
       {error && <div className="text-red-500">Error: {error}</div>}
 
       <div className="grid gap-4 w-full max-w-md">
-        {posts.map((post) => (
-          <PostDetail post={post} />
+        {postIds.map((postId) => (
+          <PostDetail key={postId} postId={postId} />
         ))}
       </div>
     </>
