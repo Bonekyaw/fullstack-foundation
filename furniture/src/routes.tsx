@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+// import { Suspense } from "react";
 
 import { createBrowserRouter, redirect } from "react-router";
 
@@ -6,9 +6,9 @@ import RootLayout from "@/pages/RootLayout";
 import HomePage from "@/pages/Home";
 import AboutPage from "@/pages/About";
 import ErrorPage from "@/pages/Error";
-import BlogRootLayout from "@/pages/blogs/BlogRootLayout";
-import BlogPage from "@/pages/blogs/Blog";
-import BlogDetailPage from "@/pages/blogs/BlogDetail";
+// import BlogRootLayout from "@/pages/blogs/BlogRootLayout";
+// import BlogPage from "@/pages/blogs/Blog";
+// import BlogDetailPage from "@/pages/blogs/BlogDetail";
 // const BlogRootLayout = lazy(() => import("@/pages/blogs/BlogRootLayout"));
 // const BlogPage = lazy(() => import("@/pages/blogs/Blog"));
 // const BlogDetailPage = lazy(() => import("@/pages/blogs/BlogDetail"));
@@ -53,87 +53,114 @@ import NewPasswordPage from "@/pages/auth/NewPassword";
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <RootLayout />, // Component: RootLayout
+    // element: <RootLayout />, // For react-router v6 & v7 declarative mode
+    Component: RootLayout, // For react-router v7 data mode
     errorElement: <ErrorPage />, // ErrorBoundary: ErrorPage
     children: [
       {
         index: true,
-        element: <HomePage />, // Component: HomePage
+        // element: <HomePage />, // For react-router v6 & v7 declarative mode
+        Component: HomePage, // For react-router v7 data mode
         loader: homeLoader,
       },
       {
         path: "about",
-        element: <AboutPage />, // Component: AboutPage
+        // element: <AboutPage />, // For react-router v6 & v7 declarative mode
+        Component: AboutPage, // For react-router v7 data mode
       },
       {
+        // For react-router v6 & v7 declarative mode
+        // path: "blogs",
+        // element: (
+        //   <Suspense fallback={<div className="text-center">Loading...</div>}>
+        //     <BlogRootLayout />
+        //   </Suspense>
+        // ),
+
+        // Lazy Loading - For react-router v7 data mode
         path: "blogs",
-        element: (
-          <Suspense fallback={<div className="text-center">Loading...</div>}>
-            <BlogRootLayout />
-          </Suspense>
-        ),
-        // lazy: {
-        //   Component: async () =>
-        //     (await import("@/pages/blogs/BlogRootLayout")).default,
-        // },
+        lazy: async () => {
+          const mod = await import("@/pages/blogs/BlogRootLayout");
+          return { Component: mod.default };
+        },
         children: [
           {
             index: true,
-            element: (
-              <Suspense
-                fallback={<div className="text-center">Loading...</div>}
-              >
-                <BlogPage />
-              </Suspense>
-            ),
+
+            // For react-router v6 & v7 declarative mode
+            // element: (
+            //   <Suspense
+            //     fallback={<div className="text-center">Loading...</div>}
+            //   >
+            //     <BlogPage />
+            //   </Suspense>
+            // ),
+
+            // For react-router v7 data mode
             // Component: BlogPage
-            loader: blogInfiniteLoader,
-            // lazy: {
-            //   loader: async () => (await import("@/router/loader")).blogInfiniteLoader,
-            //   Component: async () =>
-            //     (await import("@/pages/blogs/Blog")).default,
-            // },
+            // loader: blogInfiniteLoader,
+
+            // Lazy Loading - For react-router v7 data mode
+            lazy: async () => {
+              const mod = await import("@/pages/blogs/Blog");
+              // const { blogInfiniteLoader } = await import("@/router/loader");
+              return { Component: mod.default, loader: blogInfiniteLoader };
+            },
           },
           {
-            path: ":postId",
-            element: (
-              <Suspense
-                fallback={<div className="text-center">Loading...</div>}
-              >
-                <BlogDetailPage />
-              </Suspense>
-            ),
+            // For react-router v6 & v7 declarative mode
+            // path: ":postId",
+            // element: (
+            //   <Suspense
+            //     fallback={<div className="text-center">Loading...</div>}
+            //   >
+            //     <BlogDetailPage />
+            //   </Suspense>
+            // ),
+
+            // For react-router v7 data mode
             // Component: BlogDetailPage
-            loader: postLoader,
+            // loader: postLoader,
+
+            // Lazy Loading - For react-router v7 data mode
+            path: ":postId",
+            lazy: async () => {
+              const mod = await import("@/pages/blogs/BlogDetail");
+              // const { postLoader } = await import("@/router/loader");
+              return { Component: mod.default, loader: postLoader };
+            },
           },
         ],
       },
       {
         path: "products",
-        element: <ProductRootLayout />, // Component: ProductRootLayout
+        // element: <ProductRootLayout />, // For react-router v6 & v7 declarative mode
+        Component: ProductRootLayout, // For react-router v7 data mode
         children: [
           {
             index: true,
-            element: (
-              <Suspense
-                fallback={<div className="text-center">Loading...</div>}
-              >
-                <ProductPage />
-              </Suspense>
-            ),
-            // Component: ProductPage
+            // For react-router v6 & v7 declarative mode
+            // element: (
+            //   <Suspense
+            //     fallback={<div className="text-center">Loading...</div>}
+            //   >
+            //     <ProductPage />
+            //   </Suspense>
+            // ),
+            Component: ProductPage, // For react-router v7 data mode
             loader: productInfiniteLoader,
           },
           {
             path: ":productId",
-            element: (
-              <Suspense
-                fallback={<div className="text-center">Loading...</div>}
-              >
-                <ProductDetailPage />
-              </Suspense>
-            ),
-            // Component: ProductDetailPage
+            // For react-router v6 & v7 declarative mode
+            // element: (
+            //   <Suspense
+            //     fallback={<div className="text-center">Loading...</div>}
+            //   >
+            //     <ProductDetailPage />
+            //   </Suspense>
+            // ),
+            Component: ProductDetailPage, // For react-router v7 data mode
             loader: productLoader,
             action: favouriteAction,
           },
@@ -143,29 +170,34 @@ export const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <LoginPage />, // Component: LoginPage
+    // element: <LoginPage />, // For react-router v6 & v7 declarative mode
+    Component: LoginPage, // For react-router v7 data mode
     loader: loginLoader,
     action: loginAction,
   },
   {
     path: "/register",
-    element: <AuthRootLayout />, // Component: AuthRootLayout
+    // element: <AuthRootLayout />, // For react-router v6 & v7 declarative mode
+    Component: AuthRootLayout, // For react-router v7 data mode
     children: [
       {
         index: true,
-        element: <SignUpPage />, // Component: SignUpPage
+        // element: <SignUpPage />, // For react-router v6 & v7 declarative mode
+        Component: SignUpPage, // For react-router v7 data mode
         loader: loginLoader,
         action: registerAction,
       },
       {
         path: "otp",
-        element: <OtpPage />, // Component: OtpPage
+        // element: <OtpPage />, // For react-router v6 & v7 declarative mode
+        Component: OtpPage, // For react-router v7 data mode
         loader: otpLoader,
         action: otpAction,
       },
       {
         path: "confirm-password",
-        element: <ConfirmPasswordPage />, // Component: ConfirmPasswordPage
+        // element: <ConfirmPasswordPage />, // For react-router v6 & v7 declarative mode
+        Component: ConfirmPasswordPage, // For react-router v7 data mode
         loader: confirmLoader,
         action: confirmAction,
       },
@@ -178,22 +210,26 @@ export const router = createBrowserRouter([
   },
   {
     path: "/reset",
-    element: <AuthRootLayout />, // Component: AuthRootLayout
+    // element: <AuthRootLayout />, // For react-router v6 & v7 declarative mode
+    Component: AuthRootLayout, // For react-router v7 data mode
     children: [
       {
         index: true,
-        element: <ResetPasswordPage />, // Component: ResetPasswordPage
+        // element: <ResetPasswordPage />, // For react-router v6 & v7 declarative mode
+        Component: ResetPasswordPage, // For react-router v7 data mode
         action: resetAction,
       },
       {
         path: "verify",
-        element: <VerifyOtpPage />, // Component: VerifyOtpPage
+        // element: <VerifyOtpPage />, // For react-router v6 & v7 declarative mode
+        Component: VerifyOtpPage, // For react-router v7 data mode
         loader: verifyLoader,
         action: verifyAction,
       },
       {
         path: "new-password",
-        element: <NewPasswordPage />, // Component: NewPasswordPage
+        // element: <NewPasswordPage />, // For react-router v6 & v7 declarative mode
+        Component: NewPasswordPage, // For react-router v7 data mode
         loader: newPasswordLoader,
         action: newPasswordAction,
       },
