@@ -1,19 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Loader2 } from "lucide-react";
 
-import { useAppSelector, useAppDispatch } from "@/hooks/useRedux";
+import { useAppDispatch } from "@/hooks/useRedux";
 import {
-  fetchPosts,
+  // fetchPosts,
   addPost,
   // selectAllPosts,
   // selectPostsByUser,
-  selectPostIds,
-  selectPostsStatus,
-  selectPostsError,
+  // selectPostIds,
+  // selectPostsStatus,
+  // selectPostsError,
+  type Post,
 } from "@/store/postsSlice";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import PostDetail from "./PostDetail";
+import PostItem from "./PostItem";
+import { useGetPostsQuery } from "@/store/rtk/apiSlice";
 
 function PostsList() {
   const dispatch = useAppDispatch();
@@ -22,18 +24,27 @@ function PostsList() {
   //   const posts = useAppSelector(selectAllPosts);
   //   const userPosts = posts.filter((post) => post.userId === "user2");
 
-  const postIds = useAppSelector(selectPostIds);
-  const status = useAppSelector(selectPostsStatus);
-  const error = useAppSelector(selectPostsError);
+  // const postIds = useAppSelector(selectPostIds);
+  // const status = useAppSelector(selectPostsStatus);
+  // const error = useAppSelector(selectPostsError);
+
+  const {
+    data: posts = [],
+    isLoading,
+    // isFetching,
+    isSuccess,
+    isError,
+    error,
+  } = useGetPostsQuery();
 
   const [newPost, setNewPost] = useState("");
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchPosts());
-    }
-  }, [dispatch, status]);
+  // useEffect(() => {
+  //   if (status === "idle") {
+  //     dispatch(fetchPosts());
+  //   }
+  // }, [dispatch, status]);
 
   const handleAddPost = async () => {
     if (!newPost.trim()) return;
@@ -63,19 +74,18 @@ function PostsList() {
         </Button>
       </div>
 
-      {status === "pending" && (
+      {isLoading && (
         <div className="flex items-center gap-2 text-blue-600 mb-4">
           <Loader2 className="animate-spin h-5 w-5" />
           <span>Loading posts...</span>
         </div>
       )}
 
-      {error && <div className="text-red-500">Error: {error}</div>}
+      {isError && <div className="text-red-500">Error: {error.toString()}</div>}
 
       <div className="grid gap-4 w-full max-w-md">
-        {postIds.map((postId) => (
-          <PostDetail key={postId} postId={postId} />
-        ))}
+        {isSuccess &&
+          posts.map((post: Post) => <PostItem key={post.id} post={post} />)}
       </div>
     </>
   );

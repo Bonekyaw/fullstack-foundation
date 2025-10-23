@@ -6,10 +6,12 @@ import { Input } from "@/components/ui/input";
 // import type { Post } from "@/store/postsSlice";
 import { useAppDispatch, useAppSelector } from "@/hooks/useRedux";
 import { updatePost, deletePost, selectPostById } from "@/store/postsSlice";
+import { useParams } from "react-router";
 
-function PostDetail({ postId }: { postId: string }) {
+function PostDetailPage() {
+  const { pid } = useParams();
   const dispatch = useAppDispatch();
-  const post = useAppSelector((state) => selectPostById(state, postId));
+  const post = useAppSelector((state) => selectPostById(state, pid!));
 
   const [editId, setEditId] = useState<string | null>(null);
   const [editText, setEditText] = useState("");
@@ -76,4 +78,4 @@ function PostDetail({ postId }: { postId: string }) {
   );
 }
 
-export default PostDetail;
+export default PostDetailPage;
