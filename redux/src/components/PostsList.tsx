@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 
-import { useAppDispatch } from "@/hooks/useRedux";
+// import { useAppDispatch } from "@/hooks/useRedux";
 import {
   // fetchPosts,
-  addPost,
+  // addPost,
   // selectAllPosts,
   // selectPostsByUser,
   // selectPostIds,
@@ -15,10 +15,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import PostItem from "./PostItem";
-import { useGetPostsQuery } from "@/store/rtk/apiSlice";
+import { useAddNewPostMutation, useGetPostsQuery } from "@/store/rtk/apiSlice";
 
 function PostsList() {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   // const { status, error } = useAppSelector((state) => state.posts);
   // const posts = useAppSelector((state) => selectPostsByUser(state, "user2"));
   //   const posts = useAppSelector(selectAllPosts);
@@ -35,10 +35,14 @@ function PostsList() {
     isSuccess,
     isError,
     error,
+    // refetch,
   } = useGetPostsQuery();
 
+  const [addNewPost, { isLoading: isAddingNewPostLoading }] =
+    useAddNewPostMutation();
+
   const [newPost, setNewPost] = useState("");
-  const [loading, setLoading] = useState(false);
+  // const [loading, setLoading] = useState(false);
 
   // useEffect(() => {
   //   if (status === "idle") {
@@ -48,14 +52,15 @@ function PostsList() {
 
   const handleAddPost = async () => {
     if (!newPost.trim()) return;
-    setLoading(true);
+    // setLoading(true);
     try {
-      await dispatch(addPost({ title: newPost, userId: "user2" })).unwrap();
+      // await dispatch(addPost({ title: newPost, userId: "user2" })).unwrap();
+      await addNewPost({ title: newPost, userId: "user2" }).unwrap();
       setNewPost("");
     } catch (error) {
       alert("Failed to add new post: " + error);
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
@@ -69,10 +74,14 @@ function PostsList() {
           value={newPost}
           onChange={(e) => setNewPost(e.target.value)}
         />
-        <Button onClick={handleAddPost} disabled={loading}>
-          Add {loading && <Loader2 className="animate-spin h-2 w-2" />}
+        <Button onClick={handleAddPost} disabled={isAddingNewPostLoading}>
+          Add{" "}
+          {isAddingNewPostLoading && (
+            <Loader2 className="animate-spin h-2 w-2" />
+          )}
         </Button>
       </div>
+      {/* <Button onClick={refetch}>Refetch</Button> */}
 
       {isLoading && (
         <div className="flex items-center gap-2 text-blue-600 mb-4">
