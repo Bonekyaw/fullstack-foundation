@@ -7,7 +7,7 @@ import { Input } from "@/components/ui/input";
 import { useAppDispatch } from "@/hooks/useRedux";
 import { updatePost, deletePost } from "@/store/postsSlice";
 import { useParams } from "react-router";
-import { useGetPostQuery } from "@/store/rtk/apiSlice";
+import { useGetPostQuery } from "@/store/rtk/postsSlice";
 
 function PostDetailPage() {
   const { pid } = useParams();

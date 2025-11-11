@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router";
 
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -6,16 +7,18 @@ import { Input } from "@/components/ui/input";
 import type { Post } from "@/store/postsSlice";
 import { useAppDispatch } from "@/hooks/useRedux";
 import {
-  updatePost,
+  // updatePost,
   deletePost,
   // selectPostById
 } from "@/store/postsSlice";
-import { Link } from "react-router";
+import { useEditPostMutation } from "@/store/rtk/postsSlice";
 
 // function PostItem({ postId }: { postId: string }) {
 function PostItem({ post }: { post: Post }) {
   const dispatch = useAppDispatch();
   // const post = useAppSelector((state) => selectPostById(state, postId));
+
+  const [updatePost, { isLoading }] = useEditPostMutation();
 
   const [editId, setEditId] = useState<string | null>(null);
   const [editText, setEditText] = useState("");
@@ -23,7 +26,8 @@ function PostItem({ post }: { post: Post }) {
   const handleUpdatePost = async () => {
     if (!editText.trim()) return;
     try {
-      await dispatch(updatePost({ id: post.id, title: editText })).unwrap();
+      // await dispatch(updatePost({ id: post.id, title: editText })).unwrap();
+      await updatePost({ id: post.id, title: editText }).unwrap();
       setEditId(null);
       setEditText("");
     } catch (error) {
@@ -61,7 +65,9 @@ function PostItem({ post }: { post: Post }) {
       <CardContent className="flex gap-2">
         {editId === post.id ? (
           <>
-            <Button onClick={handleUpdatePost}>Save</Button>
+            <Button onClick={handleUpdatePost} disabled={isLoading}>
+              Save
+            </Button>
             <Button variant="secondary" onClick={() => setEditId(null)}>
               Cancel
             </Button>

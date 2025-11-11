@@ -15,7 +15,10 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import PostItem from "./PostItem";
-import { useAddNewPostMutation, useGetPostsQuery } from "@/store/rtk/apiSlice";
+import {
+  useAddNewPostMutation,
+  useGetPostsQuery,
+} from "@/store/rtk/postsSlice";
 
 function PostsList() {
   // const dispatch = useAppDispatch();
