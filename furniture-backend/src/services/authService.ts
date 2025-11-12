@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+// import { PrismaClient} from "../generated/prisma/client"; // For Latest Prisma
 
 const prisma = new PrismaClient();
 
