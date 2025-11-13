@@ -26,9 +26,9 @@ function PostItem({ post }: { post: Post }) {
   const handleUpdatePost = async () => {
     if (!editText.trim()) return;
     try {
+      setEditId(null);
       // await dispatch(updatePost({ id: post.id, title: editText })).unwrap();
       await updatePost({ id: post.id, title: editText }).unwrap();
-      setEditId(null);
       setEditText("");
     } catch (error) {
       alert("Failed to update post: " + error);
