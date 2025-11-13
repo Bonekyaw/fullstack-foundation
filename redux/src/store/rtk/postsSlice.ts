@@ -35,7 +35,35 @@ export const apiSliceWithPosts = apiSlice.injectEndpoints({
         method: "PATCH", // PUT
         body: post,
       }),
-      invalidatesTags: (result, error, arg) => [{ type: "Post", id: arg.id }],
+      // invalidatesTags: (result, error, arg) => [{ type: "Post", id: arg.id }], // Pessimistic Update
+      // Optimistic Update ( Updating the cache before the request has finished. )
+      async onQueryStarted({ id, title }, { dispatch, queryFulfilled }) {
+        const getPostsPatchResult = dispatch(
+          apiSliceWithPosts.util.updateQueryData(
+            "getPosts",
+            undefined,
+            (draft) => {
+              const post = draft.find((post) => post.id === id);
+              if (post) {
+                post.title = title!;
+              }
+            }
+          )
+        );
+
+        const getPostPatchResult = dispatch(
+          apiSliceWithPosts.util.updateQueryData("getPost", id!, (draft) => {
+            draft.title = title!;
+          })
+        );
+
+        try {
+          await queryFulfilled;
+        } catch {
+          getPostsPatchResult.undo();
+          getPostPatchResult.undo();
+        }
+      },
     }),
   }),
 });

@@ -57,9 +57,9 @@ function PostsList() {
     if (!newPost.trim()) return;
     // setLoading(true);
     try {
+      setNewPost("");
       // await dispatch(addPost({ title: newPost, userId: "user2" })).unwrap();
       await addNewPost({ title: newPost, userId: "user2" }).unwrap();
-      setNewPost("");
     } catch (error) {
       alert("Failed to add new post: " + error);
     } finally {
