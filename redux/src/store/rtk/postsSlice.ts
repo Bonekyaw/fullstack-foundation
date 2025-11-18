@@ -1,5 +1,7 @@
 import { apiSlice } from "./apiSlice";
 import type { Post } from "../postsSlice";
+import { createSelector } from "@reduxjs/toolkit";
+import type { RootState } from "..";
 
 // Get /posts - Get all posts
 // Get /posts/:id - Get post by ID
@@ -74,3 +76,25 @@ export const {
   useAddNewPostMutation,
   useEditPostMutation,
 } = apiSliceWithPosts;
+
+export const selectPostsResult = apiSliceWithPosts.endpoints.getPosts.select();
+
+const emptyPosts: Post[] = [];
+
+export const selectAllPosts = createSelector(
+  selectPostsResult,
+  (postsResult) => postsResult.data ?? emptyPosts
+);
+
+export const selectPostsByUserId = createSelector(
+  selectAllPosts,
+  (state: RootState, userId: string) => userId,
+  (posts, userId) => posts.filter((post) => post.userId === userId)
+);
+
+export const selectPostsIds = createSelector(
+  selectAllPosts,
+  (state: RootState, userId: string) => userId,
+  (posts, userId) =>
+    posts.filter((post) => post.userId === userId).map((post) => post.id)
+);

@@ -7,6 +7,10 @@ import "./index.css";
 import App from "./pages/App.tsx";
 import { store } from "./store/index.ts";
 import PostDetailPage from "./pages/PostDetail.tsx";
+import PostPage from "./pages/PostPage.tsx";
+import { apiSliceWithPosts } from "@/store/rtk/postsSlice.ts";
+
+store.dispatch(apiSliceWithPosts.endpoints.getPosts.initiate());
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
@@ -14,7 +18,8 @@ createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <Routes>
           <Route index element={<App />} />
-          <Route path=":pid" element={<PostDetailPage />} />
+          <Route path="posts" element={<PostPage />} />
+          <Route path="posts/:pid" element={<PostDetailPage />} />
         </Routes>
       </BrowserRouter>
     </Provider>
