@@ -1,7 +1,17 @@
-import { PrismaClient } from "@prisma/client";
-// import { PrismaClient} from "../generated/prisma/client"; // For Latest Prisma
+import { PrismaClient, Prisma } from "../src/generated/prisma/client";
+import { PrismaPg } from "@prisma/adapter-pg";
+import "dotenv/config";
 
-export const prisma = new PrismaClient().$extends({
+const adapter = new PrismaPg({
+  connectionString: process.env.DATABASE_URL,
+});
+
+const prisma = new PrismaClient({
+  adapter,
+});
+
+// export const prisma = new PrismaClient().$extends({
+export const prisma = prisma.$extends({
   result: {
     user: {
       fullName: {
