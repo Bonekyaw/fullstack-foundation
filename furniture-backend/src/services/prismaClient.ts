@@ -6,12 +6,12 @@ const adapter = new PrismaPg({
   connectionString: process.env.DATABASE_URL,
 });
 
-const prisma = new PrismaClient({
+const prismaOrm = new PrismaClient({
   adapter,
 });
 
 // export const prisma = new PrismaClient().$extends({
-export const prisma = prisma.$extends({
+export const prisma = prismaOrm.$extends({
   result: {
     user: {
       fullName: {
