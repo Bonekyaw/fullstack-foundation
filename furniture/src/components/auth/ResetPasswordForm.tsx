@@ -1,9 +1,4 @@
-import {
-  Link,
-  useActionData,
-  // useNavigation,
-  useSubmit,
-} from "react-router";
+import { Link, useActionData, useNavigation, useSubmit } from "react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -35,11 +30,8 @@ export function ResetPasswordForm({
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   const submit = useSubmit();
-  // const navigation = useNavigation();
-  const actionData = useActionData() as {
-    error?: string;
-    message?: string;
-  };
+  const navigation = useNavigation();
+  const actionData = useActionData() as { error?: string } | undefined;
 
   // const isSubmitting = navigation.state === "submitting";
 
@@ -103,15 +95,19 @@ export function ResetPasswordForm({
                   )}
                 />
                 {actionData && (
-                  <p className="text-xs text-red-400">{actionData?.message}</p>
+                  <p className="text-xs text-red-400">{actionData?.error}</p>
                 )}
                 <div className="grid gap-4">
                   <Button
                     type="submit"
                     className="mt-2 w-full"
-                    disabled={form.formState.isSubmitting}
+                    // disabled={form.formState.isSubmitting}
+                    disabled={navigation.state === "submitting"}
                   >
-                    {form.formState.isSubmitting ? "Submitting..." : "Reset"}
+                    {/* {form.formState.isSubmitting ? "Submitting..." : "Reset"} */}
+                    {navigation.state === "submitting"
+                      ? "Submitting..."
+                      : "Reset"}
                   </Button>
                 </div>
               </form>

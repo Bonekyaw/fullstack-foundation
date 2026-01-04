@@ -14,11 +14,7 @@ export const loginAction = async ({ request }: ActionFunctionArgs) => {
   // };
 
   try {
-    const response = await authApi.post("login", credentials);
-
-    if (response.status !== 200) {
-      return { error: response.data || "Login Failed!" };
-    }
+    await authApi.post("login", credentials);
 
     // await fetch(import.meta.env.VITE_API_URL + "login", {
     //   method: "POST",
@@ -33,8 +29,10 @@ export const loginAction = async ({ request }: ActionFunctionArgs) => {
     return redirect(redirectTo);
   } catch (error) {
     if (error instanceof AxiosError) {
-      return error.response?.data || { error: "Login Failed!" };
-    } else throw error;
+      if (error.response) {
+        return { error: error.response.data.message };
+      }
+    }
   }
 };
 
@@ -54,18 +52,15 @@ export const registerAction = async ({ request }: ActionFunctionArgs) => {
 
   try {
     const response = await authApi.post("register", credentials);
-
-    if (response.status !== 200) {
-      return { error: response.data || "Sending OTP failed!" };
-    }
-
     authStore.setAuth(response.data.phone, response.data.token, Status.otp);
 
     return redirect("/register/otp");
   } catch (error) {
     if (error instanceof AxiosError) {
-      return error.response?.data || { error: "Sending OTP failed!" };
-    } else throw error;
+      if (error.response) {
+        return { error: error.response.data.message };
+      }
+    }
   }
 };
 
@@ -81,18 +76,15 @@ export const otpAction = async ({ request }: ActionFunctionArgs) => {
 
   try {
     const response = await authApi.post("verify-otp", credentials);
-
-    if (response.status !== 200) {
-      return { error: response.data || "Verifying OTP failed!" };
-    }
-
     authStore.setAuth(response.data.phone, response.data.token, Status.confirm);
 
     return redirect("/register/confirm-password");
   } catch (error) {
     if (error instanceof AxiosError) {
-      return error.response?.data || { error: "Verifying OTP failed!" };
-    } else throw error;
+      if (error.response) {
+        return { error: error.response.data.message };
+      }
+    }
   }
 };
 
@@ -107,19 +99,16 @@ export const confirmAction = async ({ request }: ActionFunctionArgs) => {
   };
 
   try {
-    const response = await authApi.post("confirm-password", credentials);
-
-    if (response.status !== 201) {
-      return { error: response.data || "Registration failed!" };
-    }
-
+    await authApi.post("confirm-password", credentials);
     authStore.clearAuth();
 
     return redirect("/");
   } catch (error) {
     if (error instanceof AxiosError) {
-      return error.response?.data || { error: "Registration failed!" };
-    } else throw error;
+      if (error.response) {
+        return { error: error.response.data.message };
+      }
+    }
   }
 };
 
@@ -138,10 +127,7 @@ export const favouriteAction = async ({
   };
 
   try {
-    const response = await api.patch("users/products/toggle-favourite", data);
-    if (response.status !== 200) {
-      return { error: response.data || "Setting favourite Failed!" };
-    }
+    await api.patch("users/products/toggle-favourite", data);
 
     await queryClient.invalidateQueries({
       queryKey: ["products", "detail", params.productId],
@@ -150,8 +136,10 @@ export const favouriteAction = async ({
     return null;
   } catch (error) {
     if (error instanceof AxiosError) {
-      return error.response?.data || { error: "Setting favourite failed!" };
-    } else throw error;
+      if (error.response) {
+        return { error: error.response.data.message };
+      }
+    }
   }
 };
 
@@ -164,17 +152,15 @@ export const resetAction = async ({ request }: ActionFunctionArgs) => {
   try {
     const response = await authApi.post("forget-password", credentials);
 
-    if (response.status !== 200) {
-      return { error: response.data || "Sending OTP failed!" };
-    }
-
     authStore.setAuth(response.data.phone, response.data.token, Status.verify);
 
     return redirect("/reset/verify");
   } catch (error) {
     if (error instanceof AxiosError) {
-      return error.response?.data || { error: "Sending OTP failed!" };
-    } else throw error;
+      if (error.response) {
+        return { error: error.response.data.message };
+      }
+    }
   }
 };
 
@@ -190,18 +176,15 @@ export const verifyAction = async ({ request }: ActionFunctionArgs) => {
 
   try {
     const response = await authApi.post("verify", credentials);
-
-    if (response.status !== 200) {
-      return { error: response.data || "Verifying OTP failed!" };
-    }
-
     authStore.setAuth(response.data.phone, response.data.token, Status.reset);
 
     return redirect("/reset/new-password");
   } catch (error) {
     if (error instanceof AxiosError) {
-      return error.response?.data || { error: "Verifying OTP failed!" };
-    } else throw error;
+      if (error.response) {
+        return { error: error.response.data.message };
+      }
+    }
   }
 };
 
@@ -216,18 +199,16 @@ export const newPasswordAction = async ({ request }: ActionFunctionArgs) => {
   };
 
   try {
-    const response = await authApi.post("reset-password", credentials);
-
-    if (response.status !== 200) {
-      return { error: response.data || "Resetting failed!" };
-    }
+    await authApi.post("reset-password", credentials);
 
     authStore.clearAuth();
 
     return redirect("/");
   } catch (error) {
     if (error instanceof AxiosError) {
-      return error.response?.data || { error: "Resetting failed!" };
-    } else throw error;
+      if (error.response) {
+        return { error: error.response.data.message };
+      }
+    }
   }
 };

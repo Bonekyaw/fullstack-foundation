@@ -1,9 +1,4 @@
-import {
-  Link,
-  useSubmit,
-  // useNavigation,
-  useActionData,
-} from "react-router";
+import { Link, useSubmit, useNavigation, useActionData } from "react-router";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -43,11 +38,8 @@ const FormSchema = z.object({
 
 export default function LoginForm() {
   const submit = useSubmit();
-  // const navigation = useNavigation();
-  const actionData = useActionData() as {
-    error?: string;
-    message?: string;
-  };
+  const navigation = useNavigation();
+  const actionData = useActionData() as { error?: string } | undefined;
 
   // const isSubmitting = navigation.state === "submitting";
 
@@ -130,15 +122,19 @@ export default function LoginForm() {
               )}
             />
             {actionData && (
-              <p className="text-xs text-red-400">{actionData?.message}</p>
+              <p className="text-xs text-red-400">{actionData?.error}</p>
             )}
             <div className="grid gap-4">
               <Button
                 type="submit"
                 className="mt-2 w-full"
-                disabled={form.formState.isSubmitting}
+                // disabled={form.formState.isSubmitting}
+                disabled={navigation.state === "submitting"}
               >
-                {form.formState.isSubmitting ? "Submitting..." : "Sign In"}
+                {/* {form.formState.isSubmitting ? "Submitting..." : "Sign In"} */}
+                {navigation.state === "submitting"
+                  ? "Submitting..."
+                  : "Sign In"}
               </Button>
               <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
                 <span className="relative z-10 bg-background px-2 text-muted-foreground">

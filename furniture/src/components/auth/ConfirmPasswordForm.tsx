@@ -1,10 +1,5 @@
 import { useState } from "react";
-import {
-  Link,
-  useActionData,
-  // useNavigation,
-  useSubmit,
-} from "react-router";
+import { Link, useActionData, useNavigation, useSubmit } from "react-router";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -41,12 +36,8 @@ export function ConfirmPasswordForm({
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
   const submit = useSubmit();
-  // const navigation = useNavigation();
-  const actionData = useActionData() as {
-    error?: string;
-    message?: string;
-  };
-
+  const navigation = useNavigation();
+  const actionData = useActionData() as { error?: string } | undefined;
   const [clientError, setClientError] = useState<string | null>(null);
 
   // const isSubmitting = navigation.state === "submitting";
@@ -133,9 +124,7 @@ export function ConfirmPasswordForm({
                 />
                 {actionData && (
                   <div className="flex gap-2">
-                    <p className="text-xs text-red-400">
-                      {actionData?.message}
-                    </p>
+                    <p className="text-xs text-red-400">{actionData?.error}</p>
                     <Link
                       to="/register"
                       className="text-xs underline underline-offset-4"
@@ -151,9 +140,13 @@ export function ConfirmPasswordForm({
                   <Button
                     type="submit"
                     className="mt-4 w-full"
-                    disabled={form.formState.isSubmitting}
+                    // disabled={form.formState.isSubmitting}
+                    disabled={navigation.state === "submitting"}
                   >
-                    {form.formState.isSubmitting ? "Submitting..." : "Confirm"}
+                    {/* {form.formState.isSubmitting ? "Submitting..." : "Confirm"} */}
+                    {navigation.state === "submitting"
+                      ? "Submitting..."
+                      : "Confirm"}
                   </Button>
                 </div>
               </form>
