@@ -23,7 +23,7 @@ export const authApi = axios.create({
   headers: {
     "Content-Type": "application/json",
   },
-  // withCredentials: true,
+  withCredentials: true, // Required for storing cookies in browser
 });
 
 export default api;
