@@ -2,7 +2,7 @@ import { Worker } from "bullmq";
 import sharp, { concurrency } from "sharp";
 import path from "path";
 
-import { redis } from "../../../config/redisClient";
+// import { redis } from "../../../config/redisClient";
 
 // Create a worker to process the image optimization job
 const imageWorker = new Worker(
@@ -21,7 +21,13 @@ const imageWorker = new Worker(
       .webp({ quality: quality })
       .toFile(optimizedImagePath);
   },
-  { connection: redis }
+  //{ connection: redis }
+  {
+    connection: {
+      host: process.env.REDIS_HOST || "172.0.0.1",
+      port: Number(process.env.REDIS_PORT!) || 6379,
+    },
+  }
 );
 
 imageWorker.on("completed", (job) => {

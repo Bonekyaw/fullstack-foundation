@@ -8,7 +8,11 @@ export const caheWorker = new Worker(
     await invalidateCache(pattern);
   },
   {
-    connection: redis,
+    //connection: redis,
+    connection: {
+      host: process.env.REDIS_HOST || "172.0.0.1",
+      port: Number(process.env.REDIS_PORT!) || 6379,
+    },
     concurrency: 5, // Proccess 5 jobs concurrently
   }
 );
