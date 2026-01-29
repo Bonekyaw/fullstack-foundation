@@ -14,16 +14,21 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
+    "@neondatabase/serverless": "^1.0.2",
+    "@prisma/adapter-neon": "^7.3.0",
     "@prisma/adapter-pg": "^7.2.0",
     "@prisma/client": "^7.2.0",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
-    "pg": "^8.16.3"
+    "pg": "^8.16.3",
+    "ws": "^8.19.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
     "@types/node": "^25.0.8",
     "@types/pg": "^8.16.0",
+    "@types/ws": "^8.18.1",
+    "bufferutil": "^4.1.0",
     "nodemon": "^3.1.11",
     "prisma": "^7.2.0",
     "ts-node": "^10.9.2",
