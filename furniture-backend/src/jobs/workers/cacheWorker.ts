@@ -1,5 +1,12 @@
 import { Worker } from "bullmq";
-import { redis } from "../../../config/redisClient";
+// import { redis } from "../../../config/redisClient";
+import Redis from "ioredis";
+
+export const redis = new Redis({
+  host: process.env.REDIS_HOST || "127.0.0.1",
+  port: Number(process.env.REDIS_PORT) || 6379,
+  // Add password if needed: password: process.env.REDIS_PASSWORD,
+});
 
 export const caheWorker = new Worker(
   "cache-invalidation",
@@ -14,7 +21,7 @@ export const caheWorker = new Worker(
       port: Number(process.env.REDIS_PORT!) || 6379,
     },
     concurrency: 5, // Proccess 5 jobs concurrently
-  }
+  },
 );
 
 caheWorker.on("completed", (job) => {
@@ -28,7 +35,7 @@ caheWorker.on("failed", (job: any, err) => {
 const invalidateCache = async (pattern: string) => {
   try {
     const stream = redis.scanStream({
-      match: pattern,
+      match: pattern, // "products:*"
       count: 100,
     });
 
